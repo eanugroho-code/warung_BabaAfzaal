@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Warung BabaAfzaal - Jajan Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    <style>
+        :root {
+            --pure-white: #ffffff;
+            --soft-white: #f8fafc;
+            --teal: #2c9c8c;
+            --teal-light: #4db6a8;
+            --teal-soft: #e6f5f2;
+            --teal-dark: #1e7a6e;
+            --teal-pale: #d0efe9;
+            --cyan: #3b9eb3;
+            --cyan-light: #6bb5c5;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --border-light: #e2e8f0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.03);
+            --shadow-md: 0 5px 20px rgba(0,0,0,0.05);
+            --shadow-lg: 0 12px 28px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --star-active: #fbbf24;
+            --star-inactive: #e2e8f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+        
+        body {
+            background: var(--soft-white);
+            color: var(--gray-700);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            background: var(--pure-white);
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+            color: var(--teal);
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+        
+        .logo span {
+            color: var(--teal);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            background: var(--teal-soft);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--teal);
+            transition: var(--transition);
+        }
+        
+        .cart-icon:hover {
+            background: var(--teal);
+            color: var(--pure-white);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--teal);
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            border: 2px solid var(--pure-white);
+        }
+        
+        .btn-primary {
+            background: var(--teal);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover {
+            background: var(--teal-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--teal);
+            color: var(--teal);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        
+        .btn-outline:hover {
+            background: var(--teal-soft);
+        }
+        
+        /* Carousel */
+        .carousel-section {
+            background: var(--teal-soft);
+            margin-bottom: 40px;
+        }
+        
+        .swiper {
+            width: 100%;
+            height: 400px;
+        }
+        
+        .swiper-slide {
+            background: var(--teal-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-content {
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .carousel-title {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--teal-dark);
+        }
+        
+        .carousel-description {
+            font-size: 18px;
+            color: var(--gray-600);
+        }
+        
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--teal) !important;
+            background: rgba(255,255,255,0.8);
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 50%;
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: var(--teal) !important;
+        }
+        
+        /* Category Filter */
+        .category-filter {
+            padding: 16px 0;
+            background: var(--pure-white);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 70px;
+            z-index: 99;
+        }
+        
+        .category-list {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 8px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .category-list::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .category-btn {
+            background: var(--gray-100);
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        
+        .category-btn:hover {
+            background: var(--teal-soft);
+            color: var(--teal);
+        }
+        
+        .category-btn.active {
+            background: var(--teal);
+            color: white;
+        }
+        
+        /* Products Section */
+        .products-section {
+            padding: 40px 0 80px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 35px;
+            color: var(--gray-800);
+            font-weight: 800;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--teal);
+            border-radius: 3px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        /* Product Card */
+        .product-card {
+            background: var(--pure-white);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--teal);
+        }
+        
+        .product-media {
+            background: var(--gray-100);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 210px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .product-icon {
+            font-size: 80px;
+            color: var(--teal);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover .product-icon {
+            transform: scale(1.05);
+            color: var(--cyan);
+        }
+        
+        .product-info {
+            padding: 16px;
+        }
+        
+        .product-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 8px;
+        }
+        
+        .product-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--gray-500);
+            padding: 8px 0;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            margin: 8px 0;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .stat-item i {
+            color: var(--teal);
+        }
+        
+        .product-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--teal-dark);
+            margin-top: 8px;
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+            align-items: center;
+        }
+        
+        .rating-stars i {
+            font-size: 13px;
+        }
+        
+        .rating-stars i.fa-star, .rating-stars i.fa-star-half-alt {
+            color: var(--star-active);
+        }
+        
+        .rating-stars i.far.fa-star {
+            color: var(--star-inactive);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background: var(--pure-white);
+            margin: 50px auto;
+            width: 90%;
+            max-width: 550px;
+            border-radius: 28px;
+            overflow: hidden;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        .modal-content.large {
+            max-width: 800px;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            background: var(--teal);
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .close-modal {
+            font-size: 28px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border-light);
+            border-radius: 50px;
+            font-size: 15px;
+            margin-bottom: 16px;
+            transition: 0.2s;
+        }
+        
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--teal);
+        }
+        
+        /* History Card */
+        .history-card {
+            background: var(--gray-100);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--teal);
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .history-id {
+            font-weight: 800;
+            color: var(--teal-dark);
+        }
+        
+        .history-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-processing { background: #dbeafe; color: #1e40af; }
+        .status-shipped { background: #dcfce7; color: #166534; }
+        .status-completed { background: #e0e7ff; color: #3730a3; }
+        
+        .history-items {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-bottom: 12px;
+        }
+        
+        .history-total {
+            font-weight: 800;
+            color: var(--teal-dark);
+            text-align: right;
+        }
+        
+        .order-result-card {
+            background: var(--teal-soft);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid var(--teal);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--pure-white);
+            padding: 40px 0 25px;
+            border-top: 1px solid var(--border-light);
+            margin-top: 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .footer-section h3 {
+            color: var(--teal);
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .footer-section p {
+            color: var(--gray-500);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-light);
+            color: var(--gray-400);
+            font-size: 12px;
+        }
+        
+        /* Floating WhatsApp */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            width: 55px;
+            height: 55px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 999;
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 85px;
+            right: 20px;
+            background: var(--teal);
+            color: white;
+            padding: 12px 22px;
+            border-radius: 50px;
+            display: none;
+            z-index: 3000;
+            font-size: 14px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Buttons */
+        .btn-add-cart {
+            background: var(--teal);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .btn-add-cart:hover {
+            background: var(--teal-dark);
+            transform: translateY(-2px);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: var(--gray-500);
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 50px;
+            margin-bottom: 16px;
+            color: var(--gray-400);
+        }
+        
+        /* Admin Link */
+        .admin-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+        
+        .admin-link a {
+            color: var(--teal);
+            text-decoration: none;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        
+        .admin-link a:hover {
+            opacity: 1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .product-media {
+                min-height: 140px;
+                padding: 12px;
+            }
+            
+            .product-icon {
+                font-size: 50px;
+            }
+            
+            .product-info {
+                padding: 12px;
+            }
+            
+            .product-title {
+                font-size: 13px;
+            }
+            
+            .product-stats {
+                font-size: 10px;
+            }
+            
+            .product-price {
+                font-size: 15px;
+            }
+            
+            .carousel-title {
+                font-size: 26px;
+            }
+            
+            .carousel-description {
+                font-size: 13px;
+            }
+            
+            .swiper {
+                height: 280px;
+            }
+            
+            .container {
+                padding: 0 14px;
+            }
+            
+            .category-btn {
+                padding: 6px 18px;
+                font-size: 12px;
+            }
+            
+            .btn-primary, .btn-outline {
+                padding: 6px 14px;
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                gap: 10px;
+            }
+            
+            .product-title {
+                font-size: 12px;
+            }
+            
+            .product-price {
+                font-size: 14px;
+            }
+            
+            .product-media {
+                min-height: 120px;
+            }
+            
+            .product-icon {
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <h1><span>Warung</span> BabaAfzaal</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn-outline" onclick="openHistoryModal()">
+                    <i class="fas fa-history"></i> Histori Saya
+                </button>
+                <button class="btn-primary" onclick="openOrderStatusModal()">
+                    <i class="fas fa-search"></i> Cek Pesanan
+                </button>
+                <div class="cart-icon" onclick="openCheckoutModal()">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="carousel-section">
+        <div class="swiper">
+            <div class="swiper-wrapper" id="carouselWrapper"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <div class="category-filter">
+        <div class="container">
+            <div class="category-list" id="categoryList"></div>
+        </div>
+    </div>
+
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title">✨ PRODUK PILIHAN ✨</h2>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Modal Identitas Pembeli -->
+    <div class="modal" id="buyerIdentityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user"></i> Data Pembeli</h2>
+                <span class="close-modal" onclick="closeBuyerIdentityModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 16px;">Masukkan nama dan nomor WhatsApp untuk melanjutkan pesanan.</p>
+                <input type="text" id="buyerName" class="modal-input" placeholder="Nama Lengkap">
+                <input type="tel" id="buyerPhone" class="modal-input" placeholder="Nomor WhatsApp (contoh: 081234567890)">
+                <button class="btn-add-cart" onclick="saveBuyerIdentityAndProceed()">
+                    <i class="fas fa-check"></i> Lanjutkan ke Keranjang
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cek Pesanan -->
+    <div class="modal" id="orderStatusModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-search"></i> Cek Status Pesanan</h2>
+                <span class="close-modal" onclick="closeOrderStatusModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 16px;">Masukkan nama dan nomor WhatsApp untuk melihat pesanan Anda.</p>
+                <input type="text" id="searchName" class="modal-input" placeholder="Nama Lengkap">
+                <input type="tel" id="searchPhone" class="modal-input" placeholder="Nomor WhatsApp">
+                <button class="btn-add-cart" onclick="searchOrders()">
+                    <i class="fas fa-search"></i> Cari Pesanan Saya
+                </button>
+                <div id="searchResult" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Histori Pembelian -->
+    <div class="modal" id="historyModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2><i class="fas fa-history"></i> Histori Pembelian Saya</h2>
+                <span class="close-modal" onclick="closeHistoryModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 16px;">Masukkan nama dan nomor WhatsApp untuk melihat riwayat pesanan Anda.</p>
+                <input type="text" id="historyName" class="modal-input" placeholder="Nama Lengkap">
+                <input type="tel" id="historyPhone" class="modal-input" placeholder="Nomor WhatsApp">
+                <button class="btn-add-cart" onclick="loadHistory()">
+                    <i class="fas fa-list"></i> Lihat Histori
+                </button>
+                <div id="historyResult" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Rating Produk -->
+    <div class="modal" id="ratingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-star"></i> Beri Rating Produk</h2>
+                <span class="close-modal" onclick="closeRatingModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="ratingProductName" style="font-weight: 700; margin-bottom: 16px;"></p>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div class="rating-stars" id="ratingStarsInput" style="justify-content: center; gap: 12px;">
+                        <i class="far fa-star" data-star="1" style="font-size: 32px; cursor: pointer;"></i>
+                        <i class="far fa-star" data-star="2" style="font-size: 32px; cursor: pointer;"></i>
+                        <i class="far fa-star" data-star="3" style="font-size: 32px; cursor: pointer;"></i>
+                        <i class="far fa-star" data-star="4" style="font-size: 32px; cursor: pointer;"></i>
+                        <i class="far fa-star" data-star="5" style="font-size: 32px; cursor: pointer;"></i>
+                    </div>
+                </div>
+                <textarea id="ratingComment" class="modal-input" placeholder="Tulis komentar (opsional)" rows="3" style="border-radius: 16px;"></textarea>
+                <button class="btn-add-cart" onclick="submitRating()">
+                    <i class="fas fa-paper-plane"></i> Kirim Rating
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detail Produk -->
+    <div class="modal" id="productDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detail Produk</h2>
+                <span class="close-modal" onclick="closeProductDetailModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="productDetailContent"></div>
+        </div>
+    </div>
+    
+    <!-- Modal Checkout -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Keranjang Belanja</h2>
+                <span class="close-modal" onclick="closeCheckoutModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="checkoutContent"></div>
+        </div>
+    </div>
+    
+    <!-- Modal Konfirmasi -->
+    <div class="modal" id="orderConfirmationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Pesanan Berhasil</h2>
+                <span class="close-modal" onclick="closeOrderConfirmationModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="orderConfirmationContent"></div>
+        </div>
+    </div>
+
+    <footer id="mainFooter">
+        <div class="container">
+            <div class="footer-content" id="footerContent"></div>
+            <div class="footer-bottom">
+                <p id="footerCopyright"></p>
+                <div class="admin-link">
+                    <a href="admin.html" target="_blank"><i class="fas fa-cog"></i> Panel Admin</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-whatsapp" onclick="openWhatsAppChat()">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+    
+    <div class="notification" id="notification"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            loop: true, autoplay: { delay: 4500, disableOnInteraction: false }, 
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+        });
+
+        let products = [];
+        let cart = [];
+        let currentCategory = "Semua";
+        let currentBuyer = null;
+        let currentRatingOrderId = null;
+        let currentRatingProductId = null;
+        let selectedRating = 0;
+
+        // Load Carousel from localStorage (synchronized with admin)
+        function loadCarousel() {
+            const saved = localStorage.getItem('babaafzaal_carousel');
+            let slides = saved ? JSON.parse(saved) : [
+                { id:1, title: "Selamat Datang di Warung BabaAfzaal", description: "Belanja praktis, aman & terpercaya", bgColor: "#e6f5f2" },
+                { id:2, title: "Promo Spesial", description: "Dapatkan diskon menarik untuk produk favoritmu", bgColor: "#e6f5f2" },
+                { id:3, title: "Gratis Ongkir", description: "Minimal belanja Rp 150.000, gratis ongkir", bgColor: "#e6f5f2" }
+            ];
+            
+            const wrapper = document.getElementById('carouselWrapper');
+            wrapper.innerHTML = slides.map(slide => `
+                <div class="swiper-slide">
+                    <div class="carousel-content">
+                        <h2 class="carousel-title">${slide.title}</h2>
+                        <p class="carousel-description">${slide.description}</p>
+                    </div>
+                </div>
+            `).join('');
+            swiper.update();
+        }
+
+        // Load Products from localStorage
+        function loadProducts() {
+            const saved = localStorage.getItem('babaafzaal_products');
+            if(saved && JSON.parse(saved).length > 0) {
+                products = JSON.parse(saved);
+            } else {
+                products = [
+                    { id:1, name:"Kopi Arabika Premium", description:"Kopi arabika pilihan dengan rasa yang kaya dan aroma harum.", price:85000, category:"Minuman", icon:"fas fa-mug-hot", views:245, sold:120, rating:210, ratingCount:42, stock:50 },
+                    { id:2, name:"Madu Asli Hutan", description:"Madu murni dari lebah hutan, kualitas terbaik.", price:125000, category:"Makanan", icon:"fas fa-honey-pot", views:189, sold:85, rating:220, ratingCount:38, stock:30 },
+                    { id:3, name:"Minyak Zaitun Extra Virgin", description:"Minyak zaitun premium untuk kesehatan.", price:185000, category:"Makanan", icon:"fas fa-oil-can", views:156, sold:45, rating:210, ratingCount:29, stock:25 },
+                    { id:4, name:"Teh Herbal Jasmine", description:"Teh bunga melati asli yang menenangkan.", price:65000, category:"Minuman", icon:"fas fa-leaf", views:320, sold:95, rating:230, ratingCount:56, stock:75 },
+                    { id:5, name:"Kurma Medjool Premium", description:"Kurma medjool ukuran besar, manis alami.", price:95000, category:"Makanan", icon:"fas fa-apple-alt", views:512, sold:210, rating:245, ratingCount:89, stock:100 },
+                    { id:6, name:"Minyak Kelapa Murni VCO", description:"VCO cold pressed, kaya manfaat.", price:75000, category:"Kesehatan", icon:"fas fa-seedling", views:98, sold:65, rating:176, ratingCount:23, stock:40 }
+                ];
+                localStorage.setItem('babaafzaal_products', JSON.stringify(products));
+            }
+            displayCategories();
+            displayProducts();
+        }
+        
+        function displayCategories() {
+            const categories = ["Semua", ...new Set(products.map(p => p.category))];
+            let html = '';
+            categories.forEach(cat => {
+                html += `<button class="category-btn ${currentCategory === cat ? 'active' : ''}" onclick="filterByCategory('${cat}')">${cat}</button>`;
+            });
+            document.getElementById('categoryList').innerHTML = html;
+        }
+        
+        function filterByCategory(category) {
+            currentCategory = category;
+            displayCategories();
+            displayProducts();
+        }
+        
+        function getAverageRating(product) {
+            if(product.ratingCount > 0) return (product.rating / product.ratingCount).toFixed(1);
+            return "0";
+        }
+        
+        function renderStarsHtml(rating, ratingCount) {
+            const avg = parseFloat(rating);
+            let stars = '';
+            for(let i=1; i<=5; i++) {
+                if(i <= Math.floor(avg)) stars += '<i class="fas fa-star"></i>';
+                else if(i - 0.5 <= avg) stars += '<i class="fas fa-star-half-alt"></i>';
+                else stars += '<i class="far fa-star"></i>';
+            }
+            return `${stars} <span style="font-size:11px; margin-left:5px;">(${ratingCount})</span>`;
+        }
+        
+        function displayProducts() {
+            const grid = document.getElementById('productsGrid');
+            let filtered = currentCategory === "Semua" ? products : products.filter(p => p.category === currentCategory);
+            
+            if(filtered.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i><h3>Tidak ada produk</h3></div>';
+                return;
+            }
+            
+            let html = '';
+            filtered.forEach(p => {
+                html += `
+                    <div class="product-card" onclick="showProductDetail(${p.id})">
+                        <div class="product-media">
+                            <i class="${p.icon} product-icon"></i>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">${p.name}</div>
+                            <div class="product-stats">
+                                <div class="stat-item"><i class="fas fa-eye"></i> ${p.views} dilihat</div>
+                                <div class="stat-item"><i class="fas fa-shopping-bag"></i> ${p.sold} dibeli</div>
+                            </div>
+                            <div class="rating-stars" onclick="event.stopPropagation()">
+                                ${renderStarsHtml(getAverageRating(p), p.ratingCount)}
+                            </div>
+                            <div class="product-price">Rp ${p.price.toLocaleString('id-ID')}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+        
+        function showProductDetail(id) {
+            const p = products.find(p => p.id === id);
+            if(!p) return;
+            p.views++;
+            localStorage.setItem('babaafzaal_products', JSON.stringify(products));
+            
+            const detailHTML = `
+                <div style="text-align:center; margin-bottom:20px">
+                    <i class="${p.icon}" style="font-size:90px; color:var(--teal)"></i>
+                </div>
+                <h2 style="margin-bottom:12px">${p.name}</h2>
+                <div style="display:flex; gap:20px; margin-bottom:20px; padding:12px 0; border-top:1px solid var(--border-light); border-bottom:1px solid var(--border-light); flex-wrap:wrap">
+                    <div><i class="fas fa-eye"></i> ${p.views} dilihat</div>
+                    <div><i class="fas fa-shopping-bag"></i> ${p.sold} dibeli</div>
+                    <div><i class="fas fa-tag"></i> ${p.category}</div>
+                </div>
+                <div class="rating-stars" style="margin-bottom:16px; justify-content:center">
+                    ${renderStarsHtml(getAverageRating(p), p.ratingCount)}
+                </div>
+                <p style="margin-bottom:24px; color:var(--gray-600)">${p.description}</p>
+                <div style="font-size:28px; font-weight:800; color:var(--teal-dark); margin-bottom:28px">Rp ${p.price.toLocaleString('id-ID')}</div>
+                <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(${p.id})">
+                    <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                </button>
+            `;
+            document.getElementById('productDetailContent').innerHTML = detailHTML;
+            document.getElementById('productDetailModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeProductDetailModal() {
+            document.getElementById('productDetailModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            displayProducts();
+        }
+        
+        // Cart Functions
+        function addToCart(productId) {
+            event.stopPropagation();
+            const product = products.find(p => p.id === productId);
+            if(!product) return;
+            const existing = cart.find(item => item.productId === productId);
+            if(existing) existing.quantity++;
+            else cart.push({ productId: product.id, name: product.name, price: product.price, quantity: 1, icon: product.icon });
+            saveCart();
+            showNotification(`${product.name} ditambahkan ke keranjang`);
+            if(document.getElementById('productDetailModal').style.display === 'block') showProductDetail(productId);
+        }
+        
+        function saveCart() {
+            localStorage.setItem('babaafzaal_cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+        
+        function loadCart() {
+            cart = JSON.parse(localStorage.getItem('babaafzaal_cart') || '[]');
+            updateCartCount();
+        }
+        
+        function updateCartCount() {
+            document.getElementById('cartCount').innerText = cart.reduce((s,i)=>s+i.quantity,0);
+        }
+        
+        // Buyer Identity Management
+        function getStoredBuyer() {
+            const saved = localStorage.getItem('babaafzaal_buyer');
+            if(saved) return JSON.parse(saved);
+            return null;
+        }
+        
+        function saveBuyerIdentity(name, phone) {
+            const formattedPhone = formatPhoneNumber(phone);
+            const buyer = { name, phone: formattedPhone };
+            localStorage.setItem('babaafzaal_buyer', JSON.stringify(buyer));
+            currentBuyer = buyer;
+            return buyer;
+        }
+        
+        function formatPhoneNumber(phone) {
+            let cleaned = phone.replace(/\D/g, '');
+            if(cleaned.startsWith('0')) cleaned = '62' + cleaned.substring(1);
+            if(!cleaned.startsWith('62')) cleaned = '62' + cleaned;
+            return cleaned;
+        }
+        
+        function validatePhone(phone) {
+            const cleaned = phone.replace(/\D/g, '');
+            return cleaned.length >= 10 && cleaned.length <= 15;
+        }
+        
+        function openCheckoutModal() {
+            if(cart.length === 0) { showNotification('Keranjang kosong'); return; }
+            const storedBuyer = getStoredBuyer();
+            if(storedBuyer) {
+                currentBuyer = storedBuyer;
+                showCheckoutForm();
+            } else {
+                document.getElementById('buyerIdentityModal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function saveBuyerIdentityAndProceed() {
+            const name = document.getElementById('buyerName').value.trim();
+            const phone = document.getElementById('buyerPhone').value.trim();
+            if(!name) { showNotification('Masukkan nama lengkap'); return; }
+            if(!validatePhone(phone)) { showNotification('Nomor WhatsApp tidak valid'); return; }
+            saveBuyerIdentity(name, phone);
+            closeBuyerIdentityModal();
+            showCheckoutForm();
+        }
+        
+        function closeBuyerIdentityModal() {
+            document.getElementById('buyerIdentityModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function showCheckoutForm() {
+            const subtotal = cart.reduce((s,i)=>s + (i.price * i.quantity),0);
+            const total = subtotal + 10000;
+            let itemsHtml = '';
+            cart.forEach(item => {
+                itemsHtml += `
+                    <div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid var(--border-light); background:var(--gray-100); border-radius:16px; margin-bottom:8px">
+                        <div style="display:flex; align-items:center; gap:12px">
+                            <i class="${item.icon}" style="font-size:28px; color:var(--teal)"></i>
+                            <div><strong>${item.name}</strong><br><small>${item.quantity}x @ Rp ${item.price.toLocaleString('id-ID')}</small></div>
+                        </div>
+                        <div style="font-weight:800">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
+                    </div>
+                `;
+            });
+            const checkoutHTML = `
+                <h3 style="margin-bottom:18px">🛒 Produk Anda</h3>
+                ${itemsHtml}
+                <div style="margin:24px 0; padding:20px; background:var(--teal-soft); border-radius:20px">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px"><span>Subtotal</span><span>Rp ${subtotal.toLocaleString('id-ID')}</span></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px"><span>Ongkos Kirim</span><span>Rp 10.000</span></div>
+                    <div style="display:flex; justify-content:space-between; font-weight:800; font-size:20px; padding-top:14px; border-top:2px solid var(--teal)">
+                        <span>TOTAL</span><span style="color:var(--teal-dark)">Rp ${total.toLocaleString('id-ID')}</span>
+                    </div>
+                </div>
+                <div style="background:var(--gray-100); padding:16px; border-radius:16px; margin-bottom:20px">
+                    <p><strong>Pengiriman ke:</strong></p>
+                    <p>${currentBuyer.name}<br>${currentBuyer.phone}</p>
+                </div>
+                <textarea id="orderAddress" class="modal-input" placeholder="Alamat Lengkap (Jalan, No Rumah, Kecamatan, Kota)" rows="3" style="border-radius:16px"></textarea>
+                <textarea id="orderNotes" class="modal-input" placeholder="Catatan pesanan (opsional)" rows="2" style="border-radius:16px"></textarea>
+                <button class="btn-add-cart" onclick="processCheckout()"><i class="fas fa-check-circle"></i> BUAT PESANAN</button>
+            `;
+            document.getElementById('checkoutContent').innerHTML = checkoutHTML;
+            document.getElementById('checkoutModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function processCheckout() {
+            const address = document.getElementById('orderAddress')?.value.trim();
+            if(!address) { showNotification('Masukkan alamat lengkap'); return; }
+            
+            const notes = document.getElementById('orderNotes')?.value.trim() || '';
+            const subtotal = cart.reduce((s,i)=>s + (i.price * i.quantity),0);
+            const total = subtotal + 10000;
+            const orderId = 'ORD-' + Date.now().toString().slice(-8);
+            const orderDate = new Date().toLocaleString('id-ID');
+            
+            cart.forEach(cartItem => {
+                const product = products.find(p => p.id === cartItem.productId);
+                if(product) product.sold += cartItem.quantity;
+            });
+            localStorage.setItem('babaafzaal_products', JSON.stringify(products));
+            
+            const order = {
+                id: orderId,
+                date: orderDate,
+                customerName: currentBuyer.name,
+                customerPhone: currentBuyer.phone,
+                customerAddress: address,
+                notes: notes,
+                items: [...cart],
+                total: total,
+                status: 'pending',
+                rated: false
+            };
+            
+            const orders = JSON.parse(localStorage.getItem('babaafzaal_orders') || '[]');
+            orders.push(order);
+            localStorage.setItem('babaafzaal_orders', JSON.stringify(orders));
+            
+            cart = [];
+            saveCart();
+            closeCheckoutModal();
+            displayProducts();
+            
+            const confirmationHTML = `
+                <div style="text-align:center">
+                    <i class="fas fa-check-circle" style="font-size:70px; color:var(--teal)"></i>
+                    <h2 style="margin:20px 0">Pesanan Berhasil!</h2>
+                    <div style="background:var(--teal-soft); padding:20px; border-radius:20px; margin:20px 0">
+                        <p style="font-size:14px">ID Pesanan Anda</p>
+                        <p style="font-size:26px; font-weight:800; color:var(--teal-dark)">${orderId}</p>
+                    </div>
+                    <p style="margin-bottom:25px">Simpan ID pesanan untuk cek status nanti</p>
+                    <button class="btn-add-cart" onclick="closeOrderConfirmationModal()" style="width:auto; padding:12px 32px">Selesai</button>
+                </div>
+            `;
+            document.getElementById('orderConfirmationContent').innerHTML = confirmationHTML;
+            document.getElementById('orderConfirmationModal').style.display = 'block';
+        }
+        
+        function closeOrderConfirmationModal() {
+            document.getElementById('orderConfirmationModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Search Orders
+        function openOrderStatusModal() {
+            document.getElementById('orderStatusModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            if(currentBuyer) {
+                document.getElementById('searchName').value = currentBuyer.name;
+                document.getElementById('searchPhone').value = currentBuyer.phone;
+            } else {
+                document.getElementById('searchName').value = '';
+                document.getElementById('searchPhone').value = '';
+            }
+            document.getElementById('searchResult').innerHTML = '';
+        }
+        
+        function closeOrderStatusModal() {
+            document.getElementById('orderStatusModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function searchOrders() {
+            const name = document.getElementById('searchName').value.trim();
+            let phone = document.getElementById('searchPhone').value.trim();
+            if(!name || !phone) { showNotification('Masukkan nama dan nomor WhatsApp'); return; }
+            phone = formatPhoneNumber(phone);
+            const orders = JSON.parse(localStorage.getItem('babaafzaal_orders') || '[]');
+            const userOrders = orders.filter(o => o.customerName === name && o.customerPhone === phone);
+            const resultDiv = document.getElementById('searchResult');
+            if(userOrders.length === 0) {
+                resultDiv.innerHTML = `<div class="order-result-card" style="text-align:center">Tidak ada pesanan ditemukan</div>`;
+                return;
+            }
+            let html = '';
+            userOrders.forEach(order => {
+                let statusClass = 'status-pending';
+                let statusText = 'Menunggu';
+                if(order.status === 'processing') { statusText = 'Diproses'; statusClass = 'status-processing'; }
+                else if(order.status === 'shipped') { statusText = 'Dikirim'; statusClass = 'status-shipped'; }
+                else if(order.status === 'completed') { statusText = 'Selesai'; statusClass = 'status-completed'; }
+                let itemsHtml = '';
+                order.items.forEach(item => {
+                    itemsHtml += `<div>${item.quantity}x ${item.name} - Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>`;
+                });
+                html += `
+                    <div class="order-result-card" style="margin-bottom:16px">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px">
+                            <strong style="color:var(--teal-dark)">${order.id}</strong>
+                            <span class="history-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <div style="font-size:13px; margin-bottom:8px">Tanggal: ${order.date}</div>
+                        <div style="font-size:13px; margin-bottom:8px">${itemsHtml}</div>
+                        <div style="font-weight:800; text-align:right; color:var(--teal-dark)">Total: Rp ${order.total.toLocaleString('id-ID')}</div>
+                        <div style="font-size:12px; margin-top:8px">Alamat: ${order.customerAddress}</div>
+                    </div>
+                `;
+            });
+            resultDiv.innerHTML = html;
+        }
+        
+        // History with Rating
+        function openHistoryModal() {
+            document.getElementById('historyModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            if(currentBuyer) {
+                document.getElementById('historyName').value = currentBuyer.name;
+                document.getElementById('historyPhone').value = currentBuyer.phone;
+            } else {
+                document.getElementById('historyName').value = '';
+                document.getElementById('historyPhone').value = '';
+            }
+            document.getElementById('historyResult').innerHTML = '';
+        }
+        
+        function closeHistoryModal() {
+            document.getElementById('historyModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function loadHistory() {
+            const name = document.getElementById('historyName').value.trim();
+            let phone = document.getElementById('historyPhone').value.trim();
+            if(!name || !phone) { showNotification('Masukkan nama dan nomor WhatsApp'); return; }
+            phone = formatPhoneNumber(phone);
+            const orders = JSON.parse(localStorage.getItem('babaafzaal_orders') || '[]');
+            const userOrders = orders.filter(o => o.customerName === name && o.customerPhone === phone).reverse();
+            const historyDiv = document.getElementById('historyResult');
+            if(userOrders.length === 0) {
+                historyDiv.innerHTML = `<div style="text-align:center; padding:20px">Belum ada riwayat pembelian</div>`;
+                return;
+            }
+            let html = '';
+            userOrders.forEach(order => {
+                let statusClass = 'status-pending';
+                let statusText = 'Menunggu';
+                if(order.status === 'processing') { statusText = 'Diproses'; statusClass = 'status-processing'; }
+                else if(order.status === 'shipped') { statusText = 'Dikirim'; statusClass = 'status-shipped'; }
+                else if(order.status === 'completed') { statusText = 'Selesai'; statusClass = 'status-completed'; }
+                let itemsHtml = '';
+                order.items.forEach(item => {
+                    const hasRated = order.rated;
+                    itemsHtml += `
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border-light)">
+                            <div>${item.quantity}x ${item.name} - Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
+                            ${order.status === 'completed' && !hasRated ? 
+                                `<button class="btn-outline" style="padding:4px 12px; font-size:11px" onclick="openRatingModal('${order.id}', ${item.productId}, '${item.name}')">
+                                    <i class="fas fa-star"></i> Rating
+                                </button>` : 
+                                (hasRated ? '<span style="font-size:11px; color:var(--teal)"><i class="fas fa-check"></i> Sudah dirating</span>' : '')
+                            }
+                        </div>
+                    `;
+                });
+                html += `
+                    <div class="history-card">
+                        <div class="history-header">
+                            <span class="history-id">${order.id}</span>
+                            <span class="history-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <div style="font-size:12px; color:var(--gray-500); margin-bottom:8px">${order.date}</div>
+                        <div class="history-items">${itemsHtml}</div>
+                        <div class="history-total">Total: Rp ${order.total.toLocaleString('id-ID')}</div>
+                    </div>
+                `;
+            });
+            historyDiv.innerHTML = html;
+        }
+        
+        // Rating System
+        function openRatingModal(orderId, productId, productName) {
+            currentRatingOrderId = orderId;
+            currentRatingProductId = productId;
+            selectedRating = 0;
+            document.getElementById('ratingProductName').innerText = `Beri rating untuk: ${productName}`;
+            const stars = document.querySelectorAll('#ratingStarsInput i');
+            stars.forEach(star => {
+                star.className = 'far fa-star';
+                star.style.color = 'var(--star-inactive)';
+            });
+            document.getElementById('ratingComment').value = '';
+            document.getElementById('ratingModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            document.querySelectorAll('#ratingStarsInput i').forEach(star => {
+                star.onclick = () => {
+                    const val = parseInt(star.getAttribute('data-star'));
+                    selectedRating = val;
+                    document.querySelectorAll('#ratingStarsInput i').forEach((s, idx) => {
+                        if(idx < val) {
+                            s.className = 'fas fa-star';
+                            s.style.color = 'var(--star-active)';
+                        } else {
+                            s.className = 'far fa-star';
+                            s.style.color = 'var(--star-inactive)';
+                        }
+                    });
+                };
+            });
+        }
+        
+        function closeRatingModal() {
+            document.getElementById('ratingModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function submitRating() {
+            if(selectedRating === 0) { showNotification('Pilih rating bintang terlebih dahulu'); return; }
+            const orders = JSON.parse(localStorage.getItem('babaafzaal_orders') || '[]');
+            const orderIndex = orders.findIndex(o => o.id === currentRatingOrderId);
+            if(orderIndex !== -1) {
+                orders[orderIndex].rated = true;
+                localStorage.setItem('babaafzaal_orders', JSON.stringify(orders));
+            }
+            const product = products.find(p => p.id === currentRatingProductId);
+            if(product) {
+                product.rating = (product.rating || 0) + selectedRating;
+                product.ratingCount = (product.ratingCount || 0) + 1;
+                localStorage.setItem('babaafzaal_products', JSON.stringify(products));
+            }
+            showNotification('Terima kasih atas rating Anda!');
+            closeRatingModal();
+            loadHistory();
+            displayProducts();
+        }
+        
+        // Footer
+        function loadFooter() {
+            const footerContent = document.getElementById('footerContent');
+            footerContent.innerHTML = `
+                <div class="footer-section"><h3>🏪 TENTANG KAMI</h3><p>Warung BabaAfzaal menyediakan produk berkualitas dengan harga terbaik.</p></div>
+                <div class="footer-section"><h3>📞 KONTAK</h3><p>WhatsApp: +62 812-3456-7890<br>Email: info@babaafzaal.com</p></div>
+                <div class="footer-section"><h3>⭐ LAYANAN</h3><p>✓ Pengiriman Cepat<br>✓ Produk Berkualitas<br>✓ Pembayaran Aman</p></div>
+            `;
+            document.getElementById('footerCopyright').innerHTML = "© 2025 Warung BabaAfzaal. All rights reserved.";
+        }
+        
+        function openWhatsAppChat() {
+            const whatsapp = JSON.parse(localStorage.getItem('babaafzaal_whatsapp') || '{"number":"6281234567890"}');
+            window.open(`https://wa.me/${whatsapp.number}?text=Halo%20saya%20ingin%20bertanya%20tentang%20produk`, '_blank');
+        }
+        
+        function showNotification(msg) { 
+            const n = document.getElementById('notification'); 
+            n.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`; 
+            n.style.display = 'block'; 
+            setTimeout(() => n.style.display = 'none', 3000); 
+        }
+        
+        // Close modals on outside click
+        window.onclick = function(event) {
+            const modals = ['orderStatusModal', 'productDetailModal', 'checkoutModal', 'orderConfirmationModal', 'historyModal', 'ratingModal', 'buyerIdentityModal'];
+            modals.forEach(id => {
+                const modal = document.getElementById(id);
+                if(event.target === modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCarousel();
+            loadProducts();
+            loadCart();
+            loadFooter();
+            currentBuyer = getStoredBuyer();
+        });
+    </script>
+</body>
+</html>
