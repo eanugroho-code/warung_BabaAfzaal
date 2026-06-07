@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Admin Merchant - Warung BabaAfzaal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         * {
             margin: 0;
@@ -195,15 +197,40 @@
         .order-id { font-weight: 800; color: var(--primary); font-size: 13px; }
         .order-customer { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
         .order-detail { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+        
         .order-address-card {
             background: var(--gray-100);
-            padding: 10px 12px;
+            padding: 12px;
             border-radius: 12px;
             margin: 8px 0;
             font-size: 12px;
             border-left: 3px solid var(--primary);
         }
         .order-address-card i { color: var(--primary); width: 18px; }
+        
+        .mini-map {
+            height: 120px;
+            border-radius: 12px;
+            margin-top: 10px;
+            background: #e2e8f0;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+        
+        .google-maps-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #4285f4;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            text-decoration: none;
+            margin-top: 8px;
+        }
+        
         .order-products-list {
             background: var(--gray-50);
             padding: 10px;
@@ -248,6 +275,7 @@
         .btn-icon.whatsapp { background: #25D36620; color: #25D366; }
         .btn-icon.edit { color: var(--primary); }
         .btn-icon.delete { color: var(--danger); }
+        .btn-icon.map { background: #4285f420; color: #4285f4; }
 
         /* Modal */
         .modal {
@@ -366,6 +394,16 @@
             margin-bottom: 16px;
         }
         .order-detail-box p { margin-bottom: 8px; font-size: 13px; }
+        
+        /* Map dalam modal */
+        .map-preview {
+            height: 250px;
+            border-radius: 16px;
+            margin: 12px 0;
+            z-index: 1;
+            width: 100%;
+        }
+        
         .product-table { width: 100%; font-size: 13px; }
         .product-table td { padding: 6px 0; border-bottom: 1px solid var(--gray-200); }
 
@@ -469,7 +507,7 @@
         </div>
     </div>
 
-    <!-- Modal Verifikasi Ongkir (Detail Lengkap) -->
+    <!-- Modal Verifikasi Ongkir dengan Peta -->
     <div class="modal" id="verificationModal">
         <div class="modal-content">
             <div class="modal-header"><h3>Verifikasi Ongkir & Kirim Link</h3><button class="close-modal" onclick="closeVerificationModal()">&times;</button></div>
@@ -499,6 +537,7 @@
         let bankAccounts = [];
         let currentPage = 'dashboard';
         let currentVerificationOrder = null;
+        let mapModal = null;
 
         // Load data
         function loadData() {
@@ -542,6 +581,29 @@
             });
         }
 
+        // Helper: Generate Google Maps link
+        function getGoogleMapsLink(lat, lng) {
+            return `https://www.google.com/maps?q=${lat},${lng}`;
+        }
+
+        // Helper: Init map in modal
+        function initMapInModal(lat, lng) {
+            setTimeout(() => {
+                const mapContainer = document.getElementById('modalMap');
+                if(mapContainer && !mapModal) {
+                    mapModal = L.map('modalMap').setView([lat, lng], 15);
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
+                    }).addTo(mapModal);
+                    L.marker([lat, lng]).addTo(mapModal).bindPopup('Lokasi Customer').openPopup();
+                    mapModal.invalidateSize();
+                } else if(mapModal) {
+                    mapModal.setView([lat, lng], 15);
+                    mapModal.invalidateSize();
+                }
+            }, 300);
+        }
+
         // Render Dashboard
         function renderDashboard() {
             const totalProducts = products.length;
@@ -566,12 +628,13 @@
                 </div>
             `;
             
-            // Pending list with full details
             const pendingList = document.getElementById('pendingVerifList');
             if(pendingVerifications.length === 0) {
                 pendingList.innerHTML = '<div class="empty-state"><i class="fas fa-check-circle"></i><p>Tidak ada pesanan menunggu verifikasi</p></div>';
             } else {
-                pendingList.innerHTML = pendingVerifications.map(p => `
+                pendingList.innerHTML = pendingVerifications.map(p => {
+                    const mapsLink = p.address?.lat ? getGoogleMapsLink(p.address.lat, p.address.lng) : '#';
+                    return `
                     <div class="order-item">
                         <div class="order-header">
                             <span class="order-id">${p.id}</span>
@@ -582,6 +645,9 @@
                             <i class="fas fa-map-marker-alt"></i> <strong>Alamat Pengiriman:</strong><br>
                             📍 ${p.address?.label || 'Alamat'}: ${p.address?.detail || '-'}<br>
                             🗺️ Koordinat: ${p.address?.lat?.toFixed(6) || '-'}, ${p.address?.lng?.toFixed(6) || '-'}
+                            <div style="margin-top:8px">
+                                <a href="${mapsLink}" target="_blank" class="google-maps-link"><i class="fab fa-google"></i> Buka di Google Maps</a>
+                            </div>
                         </div>
                         <div class="order-products-list">
                             <strong><i class="fas fa-box"></i> Produk yang dipesan:</strong>
@@ -592,10 +658,9 @@
                             <button class="btn-icon whatsapp" onclick="openVerificationModal('${p.id}')"><i class="fab fa-whatsapp"></i> Verifikasi & Kirim Link</button>
                         </div>
                     </div>
-                `).join('');
+                `}).join('');
             }
             
-            // Recent orders
             const recentList = document.getElementById('recentOrdersList');
             const recent = [...orders].reverse().slice(0,5);
             if(recent.length === 0) {
@@ -633,7 +698,7 @@
             }
         }
 
-        // Render Orders (semua pesanan)
+        // Render Orders
         function renderOrders() {
             document.getElementById('pageContent').innerHTML = `
                 <div class="section-card"><div class="section-header"><h3><i class="fas fa-shopping-cart"></i> Semua Pesanan</h3></div>
@@ -642,11 +707,12 @@
             const list = document.getElementById('allOrdersList');
             let html = '';
             pendingVerifications.forEach(p => {
+                const mapsLink = p.address?.lat ? getGoogleMapsLink(p.address.lat, p.address.lng) : '#';
                 html += `
                     <div class="order-item">
                         <div class="order-header"><span class="order-id">⚠️ ${p.id}</span><span class="status-badge status-waiting">Menunggu Verifikasi</span></div>
                         <div class="order-customer">${p.customerName}</div>
-                        <div class="order-address-card"><i class="fas fa-map-marker-alt"></i> ${p.address?.detail?.substring(0, 60) || '-'}</div>
+                        <div class="order-address-card"><i class="fas fa-map-marker-alt"></i> ${p.address?.detail?.substring(0, 60) || '-'}<br><a href="${mapsLink}" target="_blank" style="font-size:11px; color:#4285f4"><i class="fab fa-google"></i> Lihat di Maps</a></div>
                         <div class="order-products-list">${p.items.map(i => `${i.quantity}x ${i.name}`).join(', ')}</div>
                         <div class="action-buttons"><button class="btn-icon whatsapp" onclick="openVerificationModal('${p.id}')"><i class="fab fa-whatsapp"></i> Verifikasi</button></div>
                     </div>
@@ -702,7 +768,9 @@
             const list = document.getElementById('verifList');
             if(pendingVerifications.length === 0) list.innerHTML = '<div class="empty-state">Semua pesanan sudah diverifikasi</div>';
             else {
-                list.innerHTML = pendingVerifications.map(p => `
+                list.innerHTML = pendingVerifications.map(p => {
+                    const mapsLink = p.address?.lat ? getGoogleMapsLink(p.address.lat, p.address.lng) : '#';
+                    return `
                     <div class="order-item">
                         <div class="order-header"><span class="order-id">${p.id}</span><span class="status-badge status-waiting">Menunggu</span></div>
                         <div class="order-customer"><i class="fas fa-user"></i> ${p.customerName} (${p.customerPhone})</div>
@@ -710,6 +778,9 @@
                             <i class="fas fa-map-marker-alt"></i> <strong>Alamat Lengkap:</strong><br>
                             📍 ${p.address?.label || '-'}: ${p.address?.detail || '-'}<br>
                             🗺️ Lat: ${p.address?.lat?.toFixed(6) || '-'}, Lng: ${p.address?.lng?.toFixed(6) || '-'}
+                            <div style="margin-top:8px">
+                                <a href="${mapsLink}" target="_blank" class="google-maps-link"><i class="fab fa-google"></i> Buka di Google Maps</a>
+                            </div>
                         </div>
                         <div class="order-products-list">
                             <strong>📦 Produk:</strong>
@@ -718,7 +789,7 @@
                         </div>
                         <div class="action-buttons"><button class="btn-icon whatsapp" onclick="openVerificationModal('${p.id}')"><i class="fab fa-whatsapp"></i> Verifikasi & Kirim Link</button></div>
                     </div>
-                `).join('');
+                `}).join('');
             }
         }
 
@@ -799,7 +870,7 @@
             `;
         }
 
-        // VERIFICATION MODAL with FULL DETAILS
+        // VERIFICATION MODAL with MAP
         function openVerificationModal(orderId) {
             const order = pendingVerifications.find(p => p.id === orderId);
             if(!order) return;
@@ -809,6 +880,8 @@
                 <tr><td>${i.quantity}x ${i.name}</td><td style="text-align:right">Rp ${(i.price*i.quantity).toLocaleString('id-ID')}</td></tr>
             `).join('');
             
+            const mapsLink = order.address?.lat ? getGoogleMapsLink(order.address.lat, order.address.lng) : '#';
+            
             document.getElementById('verificationContent').innerHTML = `
                 <div class="order-detail-box">
                     <p><strong>🆔 ID Pesanan:</strong> ${order.id}</p>
@@ -817,6 +890,10 @@
                     📍 Label: ${order.address?.label || '-'}<br>
                     📍 Detail: ${order.address?.detail || '-'}<br>
                     🗺️ Koordinat: ${order.address?.lat?.toFixed(6) || '-'}, ${order.address?.lng?.toFixed(6) || '-'}</p>
+                    <div style="margin:12px 0">
+                        <a href="${mapsLink}" target="_blank" class="google-maps-link"><i class="fab fa-google"></i> Buka Lokasi di Google Maps</a>
+                    </div>
+                    <div id="modalMap" class="map-preview"></div>
                 </div>
                 
                 <div class="order-detail-box">
@@ -831,7 +908,7 @@
                 
                 <div class="form-group">
                     <label>💰 Estimasi Ongkos Kirim (Rp)</label>
-                    <input type="number" id="shippingCost" class="form-control" placeholder="Masukkan ongkir" value="15000">
+                    <input type="number" id="shippingCost" placeholder="Masukkan ongkir" value="15000">
                     <small style="color:var(--gray-500); font-size:11px">Estimasi berdasarkan jarak dari alamat toko ke alamat customer</small>
                 </div>
                 
@@ -851,6 +928,13 @@
                     <i class="fab fa-whatsapp"></i> Kirim Link Verifikasi ke Customer
                 </button>
             `;
+            
+            // Init map in modal
+            setTimeout(() => {
+                if(order.address?.lat && order.address?.lng) {
+                    initMapInModal(order.address.lat, order.address.lng);
+                }
+            }, 200);
             
             const methodSelect = document.getElementById('paymentMethodSelect');
             methodSelect.addEventListener('change', function() {
@@ -900,7 +984,10 @@
             
             const itemsText = currentVerificationOrder.items.map(i => `- ${i.quantity}x ${i.name} = Rp ${(i.price*i.quantity).toLocaleString('id-ID')}`).join('\n');
             
-            const message = `*✅ VERIFIKASI PESANAN - WARUNG BABAAFZAAL*\n\nHalo *${currentVerificationOrder.customerName}*,\n\nPesanan Anda dengan ID: *${currentVerificationOrder.id}* telah kami verifikasi.\n\n📦 *Detail Pesanan:*\n${itemsText}\n\n📍 *Alamat Pengiriman:*\n${currentVerificationOrder.address?.label || 'Alamat'}\n${currentVerificationOrder.address?.detail || '-'}\n🗺️ Koordinat: ${currentVerificationOrder.address?.lat?.toFixed(6) || '-'}, ${currentVerificationOrder.address?.lng?.toFixed(6) || '-'}\n\n🚚 *Ongkos Kirim:* Rp ${shipping.toLocaleString('id-ID')}\n💰 *Total yang harus dibayar:* *Rp ${total.toLocaleString('id-ID')}*\n\n💳 *Metode Pembayaran:*\n${paymentText}\n\n🔗 *Silakan klik link berikut untuk melanjutkan pembayaran:*\n${paymentLink}\n\nSetelah pembayaran dikonfirmasi, pesanan akan segera kami proses.\n\nTerima kasih! 🙏`;
+            const mapsLink = currentVerificationOrder.address?.lat ? 
+                `\n📍 Google Maps: https://www.google.com/maps?q=${currentVerificationOrder.address.lat},${currentVerificationOrder.address.lng}` : '';
+            
+            const message = `*✅ VERIFIKASI PESANAN - WARUNG BABAAFZAAL*\n\nHalo *${currentVerificationOrder.customerName}*,\n\nPesanan Anda dengan ID: *${currentVerificationOrder.id}* telah kami verifikasi.\n\n📦 *Detail Pesanan:*\n${itemsText}\n\n📍 *Alamat Pengiriman:*\n${currentVerificationOrder.address?.label || 'Alamat'}\n${currentVerificationOrder.address?.detail || '-'}${mapsLink}\n\n🚚 *Ongkos Kirim:* Rp ${shipping.toLocaleString('id-ID')}\n💰 *Total yang harus dibayar:* *Rp ${total.toLocaleString('id-ID')}*\n\n💳 *Metode Pembayaran:*\n${paymentText}\n\n🔗 *Silakan klik link berikut untuk melanjutkan pembayaran:*\n${paymentLink}\n\nSetelah pembayaran dikonfirmasi, pesanan akan segera kami proses.\n\nTerima kasih! 🙏`;
             
             const customerPhone = currentVerificationOrder.customerPhone;
             window.open(`https://wa.me/${customerPhone}?text=${encodeURIComponent(message)}`, '_blank');
@@ -932,7 +1019,13 @@
             showToast('Link verifikasi telah dikirim ke customer');
         }
 
-        function closeVerificationModal() { document.getElementById('verificationModal').classList.remove('show'); }
+        function closeVerificationModal() { 
+            document.getElementById('verificationModal').classList.remove('show');
+            if(mapModal) {
+                mapModal.remove();
+                mapModal = null;
+            }
+        }
 
         // CRUD Products
         function openProductModal(editId = null) {
@@ -1025,7 +1118,7 @@
 
         // Event listeners
         document.querySelectorAll('.nav-item, .sidebar-item').forEach(btn => { btn.addEventListener('click', () => { const page = btn.getAttribute('data-page'); if(page) navigateTo(page); }); });
-        window.onclick = function(e) { if(e.target.classList.contains('modal')) e.target.classList.remove('show'); }
+        window.onclick = function(e) { if(e.target.classList.contains('modal')) { e.target.classList.remove('show'); if(mapModal) { mapModal.remove(); mapModal = null; } } }
 
         // Initialize
         loadData();
