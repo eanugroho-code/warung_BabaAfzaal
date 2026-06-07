@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Warung BabaAfzaal - Jajan Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    <style>
+        /* Reset & Base - Warna: Putih, Biru Langit */
+        :root {
+            --pure-white: #ffffff;
+            --soft-white: #f8fafc;
+            --sky-light: #e8f4fd;
+            --sky-soft: #d6edfc;
+            --sky-blue: #7cb9e8;
+            --sky-medium: #5ba3d9;
+            --sky-dark: #3a7ca5;
+            --sky-pale: #f0f8ff;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --border-light: #e2e8f0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.03);
+            --shadow-md: 0 5px 20px rgba(0,0,0,0.05);
+            --shadow-lg: 0 12px 28px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+        
+        body {
+            background: var(--soft-white);
+            color: var(--gray-700);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            background: var(--pure-white);
+            color: var(--gray-800);
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+            color: var(--sky-blue);
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--gray-800);
+        }
+        
+        .logo span {
+            color: var(--sky-blue);
+            font-weight: 600;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .cart-icon {
+            position: relative;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 8px;
+            border-radius: 50%;
+            background: var(--sky-light);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sky-blue);
+        }
+        
+        .cart-icon:hover {
+            background: var(--sky-blue);
+            color: var(--pure-white);
+            transform: scale(1.02);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--sky-blue);
+            color: var(--pure-white);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            border: 2px solid var(--pure-white);
+        }
+        
+        .check-order-btn {
+            background: var(--sky-blue);
+            color: var(--pure-white);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .check-order-btn:hover {
+            background: var(--sky-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* Carousel */
+        .carousel-section {
+            background: var(--sky-light);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .swiper {
+            width: 100%;
+            height: 400px;
+        }
+        
+        .swiper-slide {
+            background: var(--sky-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .carousel-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--gray-700);
+            padding: 0 20px;
+            max-width: 700px;
+        }
+        
+        .carousel-title {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--sky-dark);
+        }
+        
+        .carousel-description {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: var(--gray-600);
+        }
+        
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--sky-blue) !important;
+            background: rgba(255,255,255,0.8);
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 50%;
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: var(--sky-blue) !important;
+        }
+        
+        /* Category Filter Section */
+        .category-filter {
+            padding: 16px 0;
+            background: var(--pure-white);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 70px;
+            z-index: 99;
+        }
+        
+        .category-list {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            padding: 8px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .category-list::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .category-btn {
+            background: var(--gray-100);
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        
+        .category-btn:hover {
+            background: var(--sky-light);
+            color: var(--sky-dark);
+        }
+        
+        .category-btn.active {
+            background: var(--sky-blue);
+            color: var(--pure-white);
+        }
+        
+        /* Products Section */
+        .products-section {
+            padding: 40px 0 80px;
+            background: var(--soft-white);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 35px;
+            color: var(--gray-800);
+            font-weight: 800;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--sky-blue);
+            border-radius: 3px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        /* ========== PRODUCT CARD ========== */
+        .product-card {
+            background: var(--pure-white);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--sky-blue);
+        }
+        
+        /* Gambar */
+        .product-media {
+            position: relative;
+            background: var(--gray-100);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 210px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 170px;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+        
+        .product-icon {
+            font-size: 80px;
+            color: var(--sky-blue);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover .product-icon {
+            transform: scale(1.05);
+            color: var(--sky-medium);
+        }
+        
+        /* Info */
+        .product-info {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .product-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-800);
+            line-height: 1.35;
+        }
+        
+        .product-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--gray-500);
+            padding: 8px 0;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            margin: 6px 0;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .stat-item i {
+            color: var(--sky-blue);
+            font-size: 12px;
+        }
+        
+        .product-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--sky-dark);
+            margin: 8px 0 4px;
+        }
+        
+        /* ========== RESPONSIVE MOBILE: 2 CARD PER BARIS ========== */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .product-media {
+                min-height: 140px;
+                padding: 12px;
+            }
+            
+            .product-image {
+                height: 100px;
+            }
+            
+            .product-icon {
+                font-size: 50px;
+            }
+            
+            .product-info {
+                padding: 12px;
+            }
+            
+            .product-title {
+                font-size: 13px;
+            }
+            
+            .product-stats {
+                font-size: 10px;
+                padding: 6px 0;
+            }
+            
+            .stat-item i {
+                font-size: 10px;
+            }
+            
+            .product-price {
+                font-size: 15px;
+            }
+            
+            .section-title {
+                font-size: 22px;
+            }
+            
+            .carousel-title {
+                font-size: 26px;
+            }
+            
+            .carousel-description {
+                font-size: 13px;
+            }
+            
+            .swiper {
+                height: 280px;
+            }
+            
+            .container {
+                padding: 0 14px;
+            }
+            
+            .category-btn {
+                padding: 6px 18px;
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                gap: 10px;
+            }
+            
+            .product-title {
+                font-size: 12px;
+            }
+            
+            .product-price {
+                font-size: 14px;
+            }
+            
+            .product-media {
+                min-height: 120px;
+            }
+            
+            .product-icon {
+                font-size: 42px;
+            }
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background: var(--pure-white);
+            margin: 60px auto;
+            width: 90%;
+            max-width: 550px;
+            border-radius: 28px;
+            overflow: hidden;
+            animation: modalFadeIn 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            background: var(--sky-blue);
+            color: var(--pure-white);
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-weight: 700;
+            font-size: 20px;
+        }
+        
+        .close-modal {
+            font-size: 28px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: var(--pure-white);
+        }
+        
+        .close-modal:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg);
+        }
+        
+        /* Modal Body */
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border-light);
+            border-radius: 50px;
+            font-size: 15px;
+            margin-bottom: 20px;
+            transition: 0.2s;
+        }
+        
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--sky-blue);
+        }
+        
+        .modal-btn {
+            background: var(--sky-blue);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+        
+        .modal-btn:hover {
+            background: var(--sky-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* Order Result di dalam modal */
+        .order-result-card {
+            background: var(--sky-light);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid var(--sky-blue);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--pure-white);
+            color: var(--gray-600);
+            padding: 40px 0 25px;
+            border-top: 1px solid var(--border-light);
+            margin-top: 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .footer-section h3 {
+            color: var(--sky-blue);
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .footer-section p {
+            color: var(--gray-500);
+            line-height: 1.6;
+            font-size: 13px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-light);
+            color: var(--gray-400);
+            font-size: 12px;
+        }
+        
+        /* Floating WhatsApp */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            width: 55px;
+            height: 55px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            cursor: pointer;
+            z-index: 999;
+            transition: 0.3s;
+        }
+        
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 85px;
+            right: 20px;
+            background: var(--sky-blue);
+            color: var(--pure-white);
+            padding: 12px 22px;
+            border-radius: 50px;
+            display: none;
+            z-index: 3000;
+            box-shadow: var(--shadow-md);
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        /* Button Add to Cart di Modal Detail */
+        .btn-add-cart {
+            background: var(--sky-blue);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-add-cart:hover {
+            background: var(--sky-dark);
+            transform: translateY(-2px);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: var(--gray-500);
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 50px;
+            margin-bottom: 16px;
+            color: var(--gray-400);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-processing { background: #dbeafe; color: #1e40af; }
+        .status-shipped { background: #dcfce7; color: #166534; }
+        .status-completed { background: #e0e7ff; color: #3730a3; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-cloud-sun"></i>
+                <h1><span>Warung</span> BabaAfzaal</h1>
+            </div>
+            <div class="header-actions">
+                <button class="check-order-btn" onclick="openOrderStatusModal()">
+                    <i class="fas fa-search"></i> Cek Pesanan
+                </button>
+                <div class="cart-icon" onclick="openCheckoutModal()">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="carousel-section">
+        <div class="swiper">
+            <div class="swiper-wrapper" id="carouselWrapper"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- Category Filter -->
+    <div class="category-filter">
+        <div class="container">
+            <div class="category-list" id="categoryList">
+                <!-- Category buttons akan diisi JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title">☁️ PRODUK PILIHAN ☁️</h2>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Modal Cek Pesanan -->
+    <div class="modal" id="orderStatusModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-search"></i> Cek Status Pesanan</h2>
+                <span class="close-modal" onclick="closeOrderStatusModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 16px; color: var(--gray-600);">Masukkan ID pesanan Anda untuk melihat status terkini.</p>
+                <input type="text" id="orderIdInputModal" class="modal-input" placeholder="Contoh: ORD-12345678">
+                <button class="modal-btn" onclick="checkOrderStatusModal()">
+                    <i class="fas fa-search"></i> Cek Status
+                </button>
+                <div id="orderResultModal" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detail Produk -->
+    <div class="modal" id="productDetailModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>Detail Produk</h2>
+                <span class="close-modal" onclick="closeProductDetailModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="productDetailContent"></div>
+        </div>
+    </div>
+    
+    <!-- Modal Checkout -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>Keranjang Belanja</h2>
+                <span class="close-modal" onclick="closeCheckoutModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="checkoutContent"></div>
+        </div>
+    </div>
+    
+    <!-- Modal Konfirmasi -->
+    <div class="modal" id="orderConfirmationModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Pesanan Berhasil</h2>
+                <span class="close-modal" onclick="closeOrderConfirmationModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="orderConfirmationContent"></div>
+        </div>
+    </div>
+
+    <footer id="mainFooter">
+        <div class="container">
+            <div class="footer-content" id="footerContent"></div>
+            <div class="footer-bottom">
+                <p id="footerCopyright"></p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-whatsapp" onclick="openWhatsAppChat()">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+    
+    <div class="notification" id="notification"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        const swiper = new Swiper('.swiper', {
+            loop: true, 
+            autoplay: { delay: 4500, disableOnInteraction: false }, 
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+        });
+
+        // Data
+        let products = [];
+        let cart = [];
+        let carouselSlides = [];
+        let footerData = {};
+        let whatsappNumber = "6281234567890";
+        let currentCategory = "Semua";
+
+        // Load Carousel
+        function loadCarousel() {
+            carouselSlides = [
+                { title: "Selamat Datang di Warung BabaAfzaal", description: "Belanja praktis, aman & terpercaya dengan harga terbaik" },
+                { title: "Promo Spesial Akhir Tahun", description: "Dapatkan diskon menarik untuk produk favoritmu" },
+                { title: "Gratis Ongkir", description: "Minimal belanja Rp 150.000, gratis ongkir se-Jabodetabek" }
+            ];
+            renderCarousel();
+        }
+        
+        function renderCarousel() {
+            const wrapper = document.getElementById('carouselWrapper');
+            let html = '';
+            carouselSlides.forEach(slide => {
+                html += `
+                    <div class="swiper-slide">
+                        <div class="carousel-content">
+                            <h2 class="carousel-title">${slide.title}</h2>
+                            <p class="carousel-description">${slide.description}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            wrapper.innerHTML = html;
+            swiper.update();
+        }
+
+        // Load Products
+        function loadProducts() {
+            const saved = localStorage.getItem('babaafzaal_products');
+            if(saved) {
+                products = JSON.parse(saved);
+            } else {
+                products = [
+                    { id:1, name:"Kopi Arabika Premium", description:"Kopi arabika pilihan dengan rasa yang kaya dan aroma yang harum. Nikmati kehangatan setiap pagi.", price:85000, category:"Minuman", image: "", icon:"fas fa-mug-hot", views:245, sold:120 },
+                    { id:2, name:"Madu Asli Hutan", description:"Madu murni hasil dari lebah hutan dengan kualitas terbaik. Manfaat alami untuk kesehatan.", price:125000, category:"Makanan", image: "", icon:"fas fa-honey-pot", views:189, sold:85 },
+                    { id:3, name:"Minyak Zaitun Extra Virgin", description:"Minyak zaitun extra virgin dengan kualitas premium untuk kesehatan dan masakan.", price:185000, category:"Makanan", image: "", icon:"fas fa-oil-can", views:156, sold:45 },
+                    { id:4, name:"Teh Herbal Jasmine", description:"Teh herbal dengan campuran bunga melati asli yang menenangkan dan menyegarkan.", price:65000, category:"Minuman", image: "", icon:"fas fa-leaf", views:320, sold:95 },
+                    { id:5, name:"Kurma Medjool Premium", description:"Kurma medjool dengan ukuran besar dan rasa manis alami. Cocok untuk buka puasa.", price:95000, category:"Makanan", image: "", icon:"fas fa-apple-alt", views:512, sold:210 },
+                    { id:6, name:"Minyak Kelapa Murni VCO", description:"Minyak kelapa murni (VCO) dengan proses cold pressed. Kaya manfaat untuk kesehatan.", price:75000, category:"Kesehatan", image: "", icon:"fas fa-seedling", views:98, sold:65 },
+                    { id:7, name:"Sabun Herbal Alami", description:"Sabun berbahan dasar herbal alami untuk perawatan kulit.", price:45000, category:"Kesehatan", image: "", icon:"fas fa-soap", views:210, sold:78 },
+                    { id:8, name:"Rempah Nusantara", description:"Paket rempah-rempah pilihan untuk masakan Anda.", price:55000, category:"Makanan", image: "", icon:"fas fa-pepper-hot", views:167, sold:92 }
+                ];
+                localStorage.setItem('babaafzaal_products', JSON.stringify(products));
+            }
+            
+            // Load views dari localStorage jika ada
+            const savedViews = localStorage.getItem('babaafzaal_product_views');
+            if(savedViews) {
+                const viewsData = JSON.parse(savedViews);
+                products.forEach(p => {
+                    if(viewsData[p.id]) p.views = viewsData[p.id];
+                });
+            }
+            
+            displayCategories();
+            displayProducts();
+        }
+        
+        // Tampilkan kategori unik
+        function displayCategories() {
+            const categories = ["Semua", ...new Set(products.map(p => p.category))];
+            const categoryList = document.getElementById('categoryList');
+            let html = '';
+            categories.forEach(cat => {
+                html += `<button class="category-btn ${currentCategory === cat ? 'active' : ''}" onclick="filterByCategory('${cat}')">${cat}</button>`;
+            });
+            categoryList.innerHTML = html;
+        }
+        
+        // Filter berdasarkan kategori
+        function filterByCategory(category) {
+            currentCategory = category;
+            displayCategories();
+            displayProducts();
+        }
+        
+        // Fungsi untuk menambah views saat card diklik
+        function incrementViews(productId) {
+            const product = products.find(p => p.id === productId);
+            if(product) {
+                product.views = (product.views || 0) + 1;
+                localStorage.setItem('babaafzaal_products', JSON.stringify(products));
+                
+                const viewsData = {};
+                products.forEach(p => { viewsData[p.id] = p.views; });
+                localStorage.setItem('babaafzaal_product_views', JSON.stringify(viewsData));
+            }
+        }
+        
+        // Display Products berdasarkan filter
+        function displayProducts() {
+            const grid = document.getElementById('productsGrid');
+            let filteredProducts = products;
+            
+            if(currentCategory !== "Semua") {
+                filteredProducts = products.filter(p => p.category === currentCategory);
+            }
+            
+            if(filteredProducts.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i><h3>Tidak ada produk</h3><p>Belum ada produk di kategori ini</p></div>';
+                return;
+            }
+            
+            let html = '';
+            filteredProducts.forEach(product => {
+                html += `
+                    <div class="product-card" onclick="showProductDetail(${product.id})">
+                        <div class="product-media">
+                            ${product.image ? 
+                                `<img src="${product.image}" class="product-image" alt="${product.name}">` : 
+                                `<i class="${product.icon} product-icon"></i>`
+                            }
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">${product.name}</div>
+                            <div class="product-stats">
+                                <div class="stat-item"><i class="fas fa-eye"></i> ${product.views || 0} dilihat</div>
+                                <div class="stat-item"><i class="fas fa-shopping-bag"></i> ${product.sold} dibeli</div>
+                            </div>
+                            <div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        // Show Product Detail (saat card diklik)
+        function showProductDetail(id) {
+            const product = products.find(p => p.id === id);
+            if(!product) return;
+            
+            incrementViews(id);
+            
+            const inCart = cart.find(item => item.productId === id);
+            
+            const detailHTML = `
+                <div style="text-align:center; margin-bottom:20px">
+                    ${product.image ? 
+                        `<img src="${product.image}" style="max-width:180px; max-height:180px; object-fit:contain; border-radius:16px">` : 
+                        `<i class="${product.icon}" style="font-size:90px; color:var(--sky-blue)"></i>`
+                    }
+                </div>
+                <h2 style="color:var(--gray-800); margin-bottom:12px; font-size:24px">${product.name}</h2>
+                <div style="display:flex; gap:20px; margin-bottom:20px; padding:12px 0; border-top:1px solid var(--border-light); border-bottom:1px solid var(--border-light)">
+                    <div><i class="fas fa-eye" style="color:var(--sky-blue)"></i> <strong>${product.views || 0}</strong> dilihat</div>
+                    <div><i class="fas fa-shopping-bag" style="color:var(--sky-blue)"></i> <strong>${product.sold}</strong> dibeli</div>
+                    <div><i class="fas fa-tag" style="color:var(--sky-blue)"></i> ${product.category}</div>
+                </div>
+                <p style="color:var(--gray-600); line-height:1.7; margin-bottom:24px">${product.description}</p>
+                <div style="font-size:28px; font-weight:800; color:var(--sky-dark); margin-bottom:28px">Rp ${product.price.toLocaleString('id-ID')}</div>
+                
+                <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(${product.id})">
+                    <i class="fas fa-cart-plus"></i> 
+                    ${inCart ? `Tambah Lagi (${inCart.quantity} di keranjang)` : 'Tambah ke Keranjang'}
+                </button>
+            `;
+            document.getElementById('productDetailContent').innerHTML = detailHTML;
+            document.getElementById('productDetailModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeProductDetailModal() {
+            document.getElementById('productDetailModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            displayProducts();
+        }
+        
+        // Cart Functions
+        function addToCart(productId) {
+            event.stopPropagation();
+            const product = products.find(p => p.id === productId);
+            if(!product) return;
+            
+            const existing = cart.find(item => item.productId === productId);
+            if(existing) {
+                existing.quantity++;
+            } else {
+                cart.push({
+                    productId: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: 1,
+                    icon: product.icon
+                });
+            }
+            saveCart();
+            showNotification(`${product.name} ditambahkan ke keranjang`);
+            if(document.getElementById('productDetailModal').style.display === 'block') {
+                showProductDetail(productId);
+            }
+        }
+        
+        function saveCart() {
+            localStorage.setItem('babaafzaal_cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+        
+        function loadCart() {
+            const saved = localStorage.getItem('babaafzaal_cart');
+            cart = saved ? JSON.parse(saved) : [];
+            updateCartCount();
+        }
+        
+        function updateCartCount() {
+            const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').innerText = total;
+        }
+        
+        // Checkout
+        function openCheckoutModal() {
+            if(cart.length === 0) {
+                showNotification('Keranjang belanja masih kosong');
+                return;
+            }
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = 10000;
+            const total = subtotal + shipping;
+            
+            let itemsHtml = '';
+            cart.forEach(item => {
+                itemsHtml += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid var(--border-light); background:var(--gray-100); border-radius:16px; margin-bottom:8px">
+                        <div style="display:flex; align-items:center; gap:12px">
+                            <i class="${item.icon}" style="font-size:28px; color:var(--sky-blue)"></i>
+                            <div>
+                                <div style="font-weight:700">${item.name}</div>
+                                <div style="font-size:12px; color:var(--gray-500)">${item.quantity}x @ Rp ${item.price.toLocaleString('id-ID')}</div>
+                            </div>
+                        </div>
+                        <div style="font-weight:800; color:var(--sky-dark)">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
+                    </div>
+                `;
+            });
+            
+            const checkoutHTML = `
+                <h3 style="margin-bottom:18px; color:var(--gray-800)">🛒 Produk Anda</h3>
+                ${itemsHtml}
+                <div style="margin:24px 0; padding:20px; background:var(--sky-light); border-radius:20px">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px">
+                        <span>Subtotal</span>
+                        <span>Rp ${subtotal.toLocaleString('id-ID')}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px">
+                        <span>Ongkos Kirim</span>
+                        <span>Rp ${shipping.toLocaleString('id-ID')}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-weight:800; font-size:20px; margin-top:14px; padding-top:14px; border-top:2px solid var(--sky-blue)">
+                        <span>TOTAL</span>
+                        <span style="color:var(--sky-dark)">Rp ${total.toLocaleString('id-ID')}</span>
+                    </div>
+                </div>
+                
+                <input type="text" id="custName" placeholder="Nama Lengkap" class="modal-input">
+                <input type="tel" id="custPhone" placeholder="Nomor WhatsApp" class="modal-input">
+                <textarea id="custAddress" placeholder="Alamat Lengkap" rows="3" style="width:100%; padding:14px; border:2px solid var(--border-light); border-radius:20px; margin-bottom:20px; font-family:inherit"></textarea>
+                
+                <button class="btn-add-cart" onclick="processCheckout()">
+                    <i class="fas fa-check-circle"></i> BUAT PESANAN
+                </button>
+            `;
+            
+            document.getElementById('checkoutContent').innerHTML = checkoutHTML;
+            document.getElementById('checkoutModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function processCheckout() {
+            const name = document.getElementById('custName')?.value.trim();
+            const phone = document.getElementById('custPhone')?.value.trim();
+            const address = document.getElementById('custAddress')?.value.trim();
+            
+            if(!name || !phone || !address) {
+                showNotification('Harap lengkapi semua data pemesanan');
+                return;
+            }
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = subtotal + 10000;
+            const orderId = 'ORD-' + Date.now().toString().slice(-8);
+            const orderDate = new Date().toLocaleString('id-ID');
+            
+            cart.forEach(cartItem => {
+                const product = products.find(p => p.id === cartItem.productId);
+                if(product) {
+                    product.sold = (product.sold || 0) + cartItem.quantity;
+                }
+            });
+            localStorage.setItem('babaafzaal_products', JSON.stringify(products));
+            
+            const order = {
+                id: orderId,
+                date: orderDate,
+                customerName: name,
+                customerPhone: phone,
+                customerAddress: address,
+                items: [...cart],
+                total: total,
+                status: 'pending'
+            };
+            
+            const orders = JSON.parse(localStorage.getItem('babaafzaal_orders') || '[]');
+            orders.push(order);
+            localStorage.setItem('babaafzaal_orders', JSON.stringify(orders));
+            
+            cart = [];
+            saveCart();
+            closeCheckoutModal();
+            displayProducts();
+            
+            const confirmationHTML = `
+                <div style="text-align:center">
+                    <i class="fas fa-check-circle" style="font-size:70px; color:var(--sky-blue)"></i>
+                    <h2 style="margin:20px 0; color:var(--gray-800)">Pesanan Berhasil!</h2>
+                    <div style="background:var(--sky-light); padding:20px; border-radius:20px; margin:20px 0">
+                        <p style="font-size:14px; color:var(--gray-500)">ID Pesanan Anda</p>
+                        <p style="font-size:26px; font-weight:800; color:var(--sky-dark); letter-spacing:1px">${orderId}</p>
+                    </div>
+                    <p style="color:var(--gray-500); margin-bottom:25px">Simpan ID pesanan untuk cek status</p>
+                    <button class="btn-add-cart" onclick="closeOrderConfirmationModal()" style="width:auto; padding:12px 32px">
+                        <i class="fas fa-check"></i> Selesai
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('orderConfirmationContent').innerHTML = confirmationHTML;
+            document.getElementById('orderConfirmationModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeOrderConfirmationModal() {
+            document.getElementById('orderConfirmationModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // ========== CEK PESANAN DENGAN MODAL ==========
+        function openOrderStatusModal() {
+            document.getElementById('orderStatusModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            document.getElementById('orderIdInputModal').value = '';
+            document.getElementById('orderResultModal').innerHTML = '';
+        }
+        
+        function closeOrderStatusModal() {
+            document.getElementById('orderStatusModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function checkOrderStatusModal() {
+            const orderId = document.getElementById('orderIdInputModal').value.trim();
+            const resultDiv = document.getElementById('orderResultModal');
+            
+            if(!orderId) {
+                resultDiv.innerHTML = `<div style="color: #dc2626; padding:12px; text-align:center">Masukkan ID pesanan terlebih dahulu</div>`;
+                return;
+            }
+            
+            const orders = JSON.parse(localStorage.getItem('babaafzaal_orders') || '[]');
+            const order = orders.find(o => o.id === orderId);
+            
+            if(!order) {
+                resultDiv.innerHTML = `
+                    <div class="order-result-card" style="text-align:center">
+                        <i class="fas fa-search" style="font-size:40px; color:var(--gray-400); margin-bottom:12px"></i>
+                        <p>Pesanan dengan ID <strong>${orderId}</strong> tidak ditemukan</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let statusText = 'Menunggu Konfirmasi';
+            let statusClass = 'status-pending';
+            if(order.status === 'processing') { statusText = 'Diproses'; statusClass = 'status-processing'; }
+            else if(order.status === 'shipped') { statusText = 'Dikirim'; statusClass = 'status-shipped'; }
+            else if(order.status === 'completed') { statusText = 'Selesai'; statusClass = 'status-completed'; }
+            
+            let itemsList = '';
+            order.items.forEach(item => {
+                itemsList += `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border-light)"><span>${item.quantity}x ${item.name}</span><span>Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</span></div>`;
+            });
+            
+            resultDiv.innerHTML = `
+                <div class="order-result-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px">
+                        <span style="font-weight:800; font-size:18px; color:var(--sky-dark)">${order.id}</span>
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </div>
+                    <div style="margin-bottom:16px">
+                        <p><strong>Nama:</strong> ${order.customerName}</p>
+                        <p><strong>Telepon:</strong> ${order.customerPhone}</p>
+                        <p><strong>Alamat:</strong> ${order.customerAddress}</p>
+                        <p><strong>Tanggal:</strong> ${order.date}</p>
+                    </div>
+                    <div style="margin-bottom:16px">
+                        <strong>Detail Produk:</strong>
+                        ${itemsList}
+                    </div>
+                    <div style="padding-top:12px; border-top:2px solid var(--sky-blue); font-weight:800; font-size:16px; text-align:right">
+                        Total: Rp ${order.total.toLocaleString('id-ID')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Footer
+        function loadFooter() {
+            footerData = {
+                sections: [
+                    { title: "🏪 TENTANG KAMI", content: "Warung BabaAfzaal menyediakan produk berkualitas dengan harga terbaik. Melayani dengan sepenuh hati." },
+                    { title: "📞 KONTAK", content: "WhatsApp: +62 812-3456-7890\nEmail: info@babaafzaal.com" },
+                    { title: "⭐ LAYANAN", content: "✓ Pengiriman Cepat\n✓ Produk Berkualitas\n✓ Pembayaran Aman" }
+                ],
+                copyright: "© 2025 Warung BabaAfzaal. All rights reserved."
+            };
+            
+            const footerContent = document.getElementById('footerContent');
+            let html = '';
+            footerData.sections.forEach(section => {
+                html += `
+                    <div class="footer-section">
+                        <h3>${section.title}</h3>
+                        <p style="white-space: pre-line">${section.content}</p>
+                    </div>
+                `;
+            });
+            footerContent.innerHTML = html;
+            document.getElementById('footerCopyright').innerHTML = footerData.copyright;
+        }
+        
+        function openWhatsAppChat() {
+            window.open(`https://wa.me/${whatsappNumber}?text=Halo%20saya%20ingin%20bertanya%20tentang%20produk%20di%20Warung%20BabaAfzaal`, '_blank');
+        }
+        
+        function showNotification(message) {
+            const notif = document.getElementById('notification');
+            notif.innerHTML = `<i class="fas fa-check-circle" style="margin-right:10px"></i> ${message}`;
+            notif.style.display = 'block';
+            setTimeout(() => {
+                notif.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Close modals on outside click
+        window.onclick = function(event) {
+            const modals = ['orderStatusModal', 'productDetailModal', 'checkoutModal', 'orderConfirmationModal'];
+            modals.forEach(id => {
+                const modal = document.getElementById(id);
+                if(event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCarousel();
+            loadProducts();
+            loadCart();
+            loadFooter();
+        });
+    </script>
+</body>
+</html>
