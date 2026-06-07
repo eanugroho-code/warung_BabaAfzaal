@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Admin Merchant - Warung BabaAfzaal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -18,7 +18,6 @@
             --primary: #2c9c8c;
             --primary-dark: #1e7a6e;
             --primary-light: #e6f5f2;
-            --primary-soft: #d0efe9;
             --white: #ffffff;
             --gray-50: #f8fafc;
             --gray-100: #f1f5f9;
@@ -32,7 +31,6 @@
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --info: #3b82f6;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
@@ -44,6 +42,7 @@
             overflow-x: hidden;
         }
 
+        /* App Container */
         .app-container {
             display: flex;
             flex-direction: column;
@@ -194,10 +193,31 @@
             gap: 8px;
         }
         .order-id { font-weight: 800; color: var(--primary); font-size: 13px; }
-        .order-customer { font-weight: 600; font-size: 14px; }
+        .order-customer { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
         .order-detail { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
-        .order-address-preview { font-size: 11px; color: var(--gray-500); background: var(--gray-100); padding: 6px 10px; border-radius: 12px; margin-top: 6px; }
-        .order-products { font-size: 12px; margin-top: 8px; padding: 8px; background: var(--gray-50); border-radius: 12px; }
+        .order-address-card {
+            background: var(--gray-100);
+            padding: 10px 12px;
+            border-radius: 12px;
+            margin: 8px 0;
+            font-size: 12px;
+            border-left: 3px solid var(--primary);
+        }
+        .order-address-card i { color: var(--primary); width: 18px; }
+        .order-products-list {
+            background: var(--gray-50);
+            padding: 10px;
+            border-radius: 12px;
+            margin: 8px 0;
+            font-size: 12px;
+        }
+        .product-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .product-row:last-child { border-bottom: none; }
         .order-total { font-weight: 700; color: var(--primary); font-size: 14px; margin-top: 8px; text-align: right; }
 
         .status-badge {
@@ -260,6 +280,38 @@
         @media (min-width: 768px) {
             .modal-content { border-radius: 28px; margin: auto; }
             .modal.show { align-items: center; }
+            .bottom-nav { display: none; }
+            .app-container { flex-direction: row; }
+            .sidebar-desktop {
+                width: 260px;
+                background: var(--white);
+                min-height: 100vh;
+                position: sticky;
+                top: 0;
+                border-right: 1px solid var(--gray-200);
+                padding: 20px 0;
+            }
+            .sidebar-logo { padding: 0 20px 20px; border-bottom: 1px solid var(--gray-200); margin-bottom: 20px; }
+            .sidebar-logo h2 { color: var(--primary); font-size: 18px; }
+            .sidebar-menu { display: flex; flex-direction: column; gap: 4px; }
+            .sidebar-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 20px;
+                background: none;
+                border: none;
+                width: 100%;
+                text-align: left;
+                cursor: pointer;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--gray-600);
+            }
+            .sidebar-item i { width: 24px; }
+            .sidebar-item.active { background: var(--primary-light); color: var(--primary); border-right: 3px solid var(--primary); }
+            .main-content { flex: 1; padding: 20px 28px; margin-bottom: 0; }
+            .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
         }
 
         .modal-header {
@@ -317,50 +369,17 @@
         .product-table { width: 100%; font-size: 13px; }
         .product-table td { padding: 6px 0; border-bottom: 1px solid var(--gray-200); }
 
-        .bank-account-list {
+        .bank-item {
             background: var(--gray-100);
-            border-radius: 16px;
             padding: 12px;
-            margin-bottom: 12px;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .empty-state { text-align: center; padding: 40px 20px; color: var(--gray-400); }
-
-        /* Desktop Sidebar */
-        @media (min-width: 768px) {
-            .bottom-nav { display: none; }
-            .app-container { flex-direction: row; }
-            .sidebar-desktop {
-                width: 260px;
-                background: var(--white);
-                min-height: 100vh;
-                position: sticky;
-                top: 0;
-                border-right: 1px solid var(--gray-200);
-                padding: 20px 0;
-            }
-            .sidebar-logo { padding: 0 20px 20px; border-bottom: 1px solid var(--gray-200); margin-bottom: 20px; }
-            .sidebar-logo h2 { color: var(--primary); font-size: 18px; }
-            .sidebar-menu { display: flex; flex-direction: column; gap: 4px; }
-            .sidebar-item {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 12px 20px;
-                background: none;
-                border: none;
-                width: 100%;
-                text-align: left;
-                cursor: pointer;
-                font-size: 13px;
-                font-weight: 500;
-                color: var(--gray-600);
-            }
-            .sidebar-item i { width: 24px; }
-            .sidebar-item.active { background: var(--primary-light); color: var(--primary); border-right: 3px solid var(--primary); }
-            .main-content { flex: 1; padding: 20px 28px; margin-bottom: 0; }
-            .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        }
 
         .toast {
             position: fixed;
@@ -458,11 +477,16 @@
         </div>
     </div>
 
-    <!-- Modal Setup Rekening -->
+    <!-- Modal Rekening -->
     <div class="modal" id="bankModal">
         <div class="modal-content">
-            <div class="modal-header"><h3>Pengaturan Rekening Toko</h3><button class="close-modal" onclick="closeBankModal()">&times;</button></div>
-            <div class="modal-body" id="bankContent"></div>
+            <div class="modal-header"><h3>Tambah Rekening</h3><button class="close-modal" onclick="closeBankModal()">&times;</button></div>
+            <div class="modal-body">
+                <div class="form-group"><label>Nama Bank</label><input type="text" id="bankName" placeholder="BCA / Mandiri / BRI"></div>
+                <div class="form-group"><label>Nomor Rekening</label><input type="text" id="bankNumber" placeholder="1234567890"></div>
+                <div class="form-group"><label>Atas Nama</label><input type="text" id="bankAccountName" placeholder="Warung BabaAfzaal"></div>
+                <button class="btn-save" onclick="saveBank()">Simpan Rekening</button>
+            </div>
         </div>
     </div>
 
@@ -487,7 +511,8 @@
             if(products.length === 0) {
                 products = [
                     { id:1, name:"Kopi Arabika Premium", description:"Kopi arabika pilihan", price:85000, category:"Minuman", icon:"fas fa-mug-hot", stock:50, views:245, sold:120 },
-                    { id:2, name:"Madu Asli Hutan", description:"Madu murni", price:125000, category:"Makanan", icon:"fas fa-honey-pot", stock:30, views:189, sold:85 }
+                    { id:2, name:"Madu Asli Hutan", description:"Madu murni", price:125000, category:"Makanan", icon:"fas fa-honey-pot", stock:30, views:189, sold:85 },
+                    { id:3, name:"Minyak Zaitun", description:"Extra virgin", price:185000, category:"Makanan", icon:"fas fa-oil-can", stock:25, views:156, sold:45 }
                 ];
                 localStorage.setItem('babaafzaal_products', JSON.stringify(products));
             }
@@ -541,7 +566,7 @@
                 </div>
             `;
             
-            // Pending list
+            // Pending list with full details
             const pendingList = document.getElementById('pendingVerifList');
             if(pendingVerifications.length === 0) {
                 pendingList.innerHTML = '<div class="empty-state"><i class="fas fa-check-circle"></i><p>Tidak ada pesanan menunggu verifikasi</p></div>';
@@ -553,9 +578,16 @@
                             <span class="status-badge status-waiting">Menunggu Verifikasi</span>
                         </div>
                         <div class="order-customer"><i class="fas fa-user"></i> ${p.customerName} (${p.customerPhone})</div>
-                        <div class="order-address-preview"><i class="fas fa-map-marker-alt"></i> ${p.address?.label || 'Alamat'}: ${p.address?.detail?.substring(0, 60) || '-'}</div>
-                        <div class="order-products"><i class="fas fa-box"></i> ${p.items.length} produk: ${p.items.map(i => `${i.quantity}x ${i.name}`).join(', ')}</div>
-                        <div class="order-total">Subtotal: Rp ${p.subtotal.toLocaleString('id-ID')}</div>
+                        <div class="order-address-card">
+                            <i class="fas fa-map-marker-alt"></i> <strong>Alamat Pengiriman:</strong><br>
+                            📍 ${p.address?.label || 'Alamat'}: ${p.address?.detail || '-'}<br>
+                            🗺️ Koordinat: ${p.address?.lat?.toFixed(6) || '-'}, ${p.address?.lng?.toFixed(6) || '-'}
+                        </div>
+                        <div class="order-products-list">
+                            <strong><i class="fas fa-box"></i> Produk yang dipesan:</strong>
+                            ${p.items.map(i => `<div class="product-row"><span>${i.quantity}x ${i.name}</span><span>Rp ${(i.price*i.quantity).toLocaleString('id-ID')}</span></div>`).join('')}
+                            <div class="product-row" style="font-weight:700; border-top:1px solid var(--gray-300); margin-top:6px; padding-top:6px"><span>Subtotal</span><span>Rp ${p.subtotal.toLocaleString('id-ID')}</span></div>
+                        </div>
                         <div class="action-buttons">
                             <button class="btn-icon whatsapp" onclick="openVerificationModal('${p.id}')"><i class="fab fa-whatsapp"></i> Verifikasi & Kirim Link</button>
                         </div>
@@ -604,7 +636,8 @@
         // Render Orders (semua pesanan)
         function renderOrders() {
             document.getElementById('pageContent').innerHTML = `
-                <div class="section-card"><div class="section-header"><h3><i class="fas fa-shopping-cart"></i> Semua Pesanan</h3></div><div class="order-list" id="allOrdersList"></div></div>
+                <div class="section-card"><div class="section-header"><h3><i class="fas fa-shopping-cart"></i> Semua Pesanan</h3></div>
+                <div class="order-list" id="allOrdersList"></div></div>
             `;
             const list = document.getElementById('allOrdersList');
             let html = '';
@@ -613,8 +646,8 @@
                     <div class="order-item">
                         <div class="order-header"><span class="order-id">⚠️ ${p.id}</span><span class="status-badge status-waiting">Menunggu Verifikasi</span></div>
                         <div class="order-customer">${p.customerName}</div>
-                        <div class="order-address-preview">📍 ${p.address?.detail?.substring(0, 50) || '-'}</div>
-                        <div class="order-products">${p.items.map(i => `${i.quantity}x ${i.name}`).join(', ')}</div>
+                        <div class="order-address-card"><i class="fas fa-map-marker-alt"></i> ${p.address?.detail?.substring(0, 60) || '-'}</div>
+                        <div class="order-products-list">${p.items.map(i => `${i.quantity}x ${i.name}`).join(', ')}</div>
                         <div class="action-buttons"><button class="btn-icon whatsapp" onclick="openVerificationModal('${p.id}')"><i class="fab fa-whatsapp"></i> Verifikasi</button></div>
                     </div>
                 `;
@@ -632,19 +665,11 @@
                                 <option value="shipped" ${o.status === 'shipped' ? 'selected' : ''}>Dikirim</option>
                                 <option value="completed" ${o.status === 'completed' ? 'selected' : ''}>Selesai</option>
                             </select>
-                            <button class="btn-icon" onclick="viewOrderDetail('${o.id}')"><i class="fas fa-eye"></i> Detail</button>
                         </div>
                     </div>
                 `;
             });
             list.innerHTML = html || '<div class="empty-state">Belum ada pesanan</div>';
-        }
-
-        function viewOrderDetail(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if(order) {
-                alert(`ID: ${order.id}\nPelanggan: ${order.customerName}\nTelepon: ${order.customerPhone}\nAlamat: ${order.customerAddress}\nProduk: ${order.items.map(i => `${i.quantity}x ${i.name}`).join(', ')}\nTotal: Rp ${order.total.toLocaleString('id-ID')}`);
-            }
         }
 
         function updateOrderStatus(orderId, status) {
@@ -680,10 +705,17 @@
                 list.innerHTML = pendingVerifications.map(p => `
                     <div class="order-item">
                         <div class="order-header"><span class="order-id">${p.id}</span><span class="status-badge status-waiting">Menunggu</span></div>
-                        <div class="order-customer">${p.customerName} (${p.customerPhone})</div>
-                        <div class="order-address-preview"><strong>Alamat:</strong> ${p.address?.label || '-'}: ${p.address?.detail || '-'}</div>
-                        <div class="order-products"><strong>Produk:</strong><br>${p.items.map(i => `• ${i.quantity}x ${i.name} - Rp ${(i.price*i.quantity).toLocaleString('id-ID')}`).join('<br>')}</div>
-                        <div class="order-total">Subtotal: Rp ${p.subtotal.toLocaleString('id-ID')}</div>
+                        <div class="order-customer"><i class="fas fa-user"></i> ${p.customerName} (${p.customerPhone})</div>
+                        <div class="order-address-card">
+                            <i class="fas fa-map-marker-alt"></i> <strong>Alamat Lengkap:</strong><br>
+                            📍 ${p.address?.label || '-'}: ${p.address?.detail || '-'}<br>
+                            🗺️ Lat: ${p.address?.lat?.toFixed(6) || '-'}, Lng: ${p.address?.lng?.toFixed(6) || '-'}
+                        </div>
+                        <div class="order-products-list">
+                            <strong>📦 Produk:</strong>
+                            ${p.items.map(i => `<div class="product-row"><span>${i.quantity}x ${i.name}</span><span>Rp ${(i.price*i.quantity).toLocaleString('id-ID')}</span></div>`).join('')}
+                            <div class="product-row" style="font-weight:700; border-top:1px solid var(--gray-300); margin-top:6px; padding-top:6px"><span>Subtotal</span><span>Rp ${p.subtotal.toLocaleString('id-ID')}</span></div>
+                        </div>
                         <div class="action-buttons"><button class="btn-icon whatsapp" onclick="openVerificationModal('${p.id}')"><i class="fab fa-whatsapp"></i> Verifikasi & Kirim Link</button></div>
                     </div>
                 `).join('');
@@ -702,26 +734,17 @@
             if(bankAccounts.length === 0) list.innerHTML = '<div class="empty-state">Belum ada rekening</div>';
             else {
                 list.innerHTML = bankAccounts.map((b, idx) => `
-                    <div class="order-item">
-                        <div class="order-header"><span><i class="fas fa-university"></i> ${b.bank}</span></div>
-                        <div class="order-detail">No: ${b.number}</div>
-                        <div class="order-detail">a.n: ${b.name}</div>
-                        <div class="action-buttons"><button class="btn-icon delete" onclick="deleteBank(${idx})"><i class="fas fa-trash"></i> Hapus</button></div>
+                    <div class="bank-item">
+                        <div><strong>${b.bank}</strong><br><span style="font-size:12px">${b.number} - a.n ${b.name}</span></div>
+                        <button class="btn-icon delete" onclick="deleteBank(${idx})"><i class="fas fa-trash"></i> Hapus</button>
                     </div>
                 `).join('');
             }
         }
 
-        function openBankModal() {
-            document.getElementById('bankContent').innerHTML = `
-                <div class="form-group"><label>Nama Bank</label><input type="text" id="bankName" placeholder="BCA / Mandiri / BRI"></div>
-                <div class="form-group"><label>Nomor Rekening</label><input type="text" id="bankNumber" placeholder="1234567890"></div>
-                <div class="form-group"><label>Atas Nama</label><input type="text" id="bankAccountName" placeholder="Warung BabaAfzaal"></div>
-                <button class="btn-save" onclick="saveBank()">Simpan Rekening</button>
-            `;
-            document.getElementById('bankModal').classList.add('show');
-        }
-
+        function openBankModal() { document.getElementById('bankModal').classList.add('show'); }
+        function closeBankModal() { document.getElementById('bankModal').classList.remove('show'); }
+        
         function saveBank() {
             const bank = document.getElementById('bankName').value.trim();
             const number = document.getElementById('bankNumber').value.trim();
@@ -732,6 +755,9 @@
             closeBankModal();
             renderBank();
             showToast('Rekening ditambahkan');
+            document.getElementById('bankName').value = '';
+            document.getElementById('bankNumber').value = '';
+            document.getElementById('bankAccountName').value = '';
         }
 
         function deleteBank(idx) {
@@ -742,8 +768,6 @@
                 showToast('Rekening dihapus');
             }
         }
-
-        function closeBankModal() { document.getElementById('bankModal').classList.remove('show'); }
 
         // Render Settings
         function renderSettings() {
@@ -766,10 +790,12 @@
         function renderMore() {
             document.getElementById('pageContent').innerHTML = `
                 <div class="section-card"><div class="section-header"><h3><i class="fas fa-ellipsis-h"></i> Menu Lainnya</h3></div>
-                <div style="padding:8px 16px;"><button class="sidebar-item" style="width:100%" onclick="navigateTo('carousel')"><i class="fas fa-images"></i> Banner</button>
-                <button class="sidebar-item" style="width:100%" onclick="navigateTo('verification')"><i class="fas fa-clock"></i> Verifikasi</button>
-                <button class="sidebar-item" style="width:100%" onclick="navigateTo('bank')"><i class="fas fa-university"></i> Rekening</button>
-                <button class="sidebar-item" style="width:100%" onclick="navigateTo('settings')"><i class="fas fa-cog"></i> Pengaturan</button></div></div>
+                <div style="padding:8px 16px;">
+                    <button class="sidebar-item" style="width:100%" onclick="navigateTo('carousel')"><i class="fas fa-images"></i> Banner</button>
+                    <button class="sidebar-item" style="width:100%" onclick="navigateTo('verification')"><i class="fas fa-clock"></i> Verifikasi</button>
+                    <button class="sidebar-item" style="width:100%" onclick="navigateTo('bank')"><i class="fas fa-university"></i> Rekening</button>
+                    <button class="sidebar-item" style="width:100%" onclick="navigateTo('settings')"><i class="fas fa-cog"></i> Pengaturan</button>
+                </div></div>
             `;
         }
 
@@ -779,23 +805,34 @@
             if(!order) return;
             currentVerificationOrder = order;
             
-            const productsHtml = order.items.map(i => `<tr><td>${i.quantity}x</td><td>${i.name}</td><td style="text-align:right">Rp ${(i.price*i.quantity).toLocaleString('id-ID')}</td></tr>`).join('');
+            const productsHtml = order.items.map(i => `
+                <tr><td>${i.quantity}x ${i.name}</td><td style="text-align:right">Rp ${(i.price*i.quantity).toLocaleString('id-ID')}</td></tr>
+            `).join('');
             
             document.getElementById('verificationContent').innerHTML = `
                 <div class="order-detail-box">
                     <p><strong>🆔 ID Pesanan:</strong> ${order.id}</p>
                     <p><strong>👤 Pelanggan:</strong> ${order.customerName} (${order.customerPhone})</p>
-                    <p><strong>📍 Alamat:</strong> ${order.address?.label || '-'}<br>${order.address?.detail || '-'}<br><small>Koordinat: ${order.address?.lat?.toFixed(6) || '-'}, ${order.address?.lng?.toFixed(6) || '-'}</small></p>
+                    <p><strong>📍 Alamat Lengkap:</strong><br>
+                    📍 Label: ${order.address?.label || '-'}<br>
+                    📍 Detail: ${order.address?.detail || '-'}<br>
+                    🗺️ Koordinat: ${order.address?.lat?.toFixed(6) || '-'}, ${order.address?.lng?.toFixed(6) || '-'}</p>
                 </div>
                 
                 <div class="order-detail-box">
                     <strong>📦 Produk yang dipesan:</strong>
-                    <table class="product-table" style="width:100%; margin-top:8px">${productsHtml}<tr style="border-top:2px solid var(--gray-200); font-weight:800"><td colspan="2">Subtotal</td><td style="text-align:right">Rp ${order.subtotal.toLocaleString('id-ID')}</td></tr></table>
+                    <table class="product-table" style="width:100%; margin-top:8px">
+                        ${productsHtml}
+                        <tr style="border-top:2px solid var(--gray-200); font-weight:800">
+                            <td>Subtotal</td><td style="text-align:right">Rp ${order.subtotal.toLocaleString('id-ID')}</td>
+                        </tr>
+                    </table>
                 </div>
                 
                 <div class="form-group">
                     <label>💰 Estimasi Ongkos Kirim (Rp)</label>
                     <input type="number" id="shippingCost" class="form-control" placeholder="Masukkan ongkir" value="15000">
+                    <small style="color:var(--gray-500); font-size:11px">Estimasi berdasarkan jarak dari alamat toko ke alamat customer</small>
                 </div>
                 
                 <div class="form-group">
@@ -863,12 +900,12 @@
             
             const itemsText = currentVerificationOrder.items.map(i => `- ${i.quantity}x ${i.name} = Rp ${(i.price*i.quantity).toLocaleString('id-ID')}`).join('\n');
             
-            const message = `*✅ VERIFIKASI PESANAN - WARUNG BABAAFZAAL*\n\nHalo *${currentVerificationOrder.customerName}*,\n\nPesanan Anda dengan ID: *${currentVerificationOrder.id}* telah kami verifikasi.\n\n📦 *Detail Pesanan:*\n${itemsText}\n\n📍 *Alamat Pengiriman:*\n${currentVerificationOrder.address?.label || 'Alamat'}\n${currentVerificationOrder.address?.detail || '-'}\n\n🚚 *Ongkos Kirim:* Rp ${shipping.toLocaleString('id-ID')}\n💰 *Total yang harus dibayar:* *Rp ${total.toLocaleString('id-ID')}*\n\n💳 *Metode Pembayaran:*\n${paymentText}\n\n🔗 *Silakan klik link berikut untuk melanjutkan pembayaran:*\n${paymentLink}\n\nSetelah pembayaran dikonfirmasi, pesanan akan segera kami proses.\n\nTerima kasih! 🙏`;
+            const message = `*✅ VERIFIKASI PESANAN - WARUNG BABAAFZAAL*\n\nHalo *${currentVerificationOrder.customerName}*,\n\nPesanan Anda dengan ID: *${currentVerificationOrder.id}* telah kami verifikasi.\n\n📦 *Detail Pesanan:*\n${itemsText}\n\n📍 *Alamat Pengiriman:*\n${currentVerificationOrder.address?.label || 'Alamat'}\n${currentVerificationOrder.address?.detail || '-'}\n🗺️ Koordinat: ${currentVerificationOrder.address?.lat?.toFixed(6) || '-'}, ${currentVerificationOrder.address?.lng?.toFixed(6) || '-'}\n\n🚚 *Ongkos Kirim:* Rp ${shipping.toLocaleString('id-ID')}\n💰 *Total yang harus dibayar:* *Rp ${total.toLocaleString('id-ID')}*\n\n💳 *Metode Pembayaran:*\n${paymentText}\n\n🔗 *Silakan klik link berikut untuk melanjutkan pembayaran:*\n${paymentLink}\n\nSetelah pembayaran dikonfirmasi, pesanan akan segera kami proses.\n\nTerima kasih! 🙏`;
             
             const customerPhone = currentVerificationOrder.customerPhone;
             window.open(`https://wa.me/${customerPhone}?text=${encodeURIComponent(message)}`, '_blank');
             
-            // Move to orders after sending
+            // Move to orders
             const updatedOrder = {
                 id: currentVerificationOrder.id,
                 date: new Date().toLocaleString('id-ID'),
@@ -986,9 +1023,11 @@
 
         function showToast(msg) { const toast = document.createElement('div'); toast.className = 'toast'; toast.innerText = msg; document.body.appendChild(toast); setTimeout(() => toast.remove(), 2500); }
 
+        // Event listeners
         document.querySelectorAll('.nav-item, .sidebar-item').forEach(btn => { btn.addEventListener('click', () => { const page = btn.getAttribute('data-page'); if(page) navigateTo(page); }); });
         window.onclick = function(e) { if(e.target.classList.contains('modal')) e.target.classList.remove('show'); }
 
+        // Initialize
         loadData();
         navigateTo('dashboard');
     </script>
