@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Admin Merchant - Warung BabaAfzaal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        :root {
+            --primary: #2c9c8c;
+            --primary-dark: #1e7a6e;
+            --primary-light: #e6f5f2;
+            --primary-soft: #d0efe9;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            background: var(--gray-100);
+            color: var(--gray-800);
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Bottom Navigation Mobile */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 16px 20px;
+            border-top: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            background: rgba(255,255,255,0.95);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 30px;
+            color: var(--gray-500);
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .nav-item i { font-size: 20px; }
+        .nav-item.active { color: var(--primary); background: var(--primary-light); }
+        .nav-item:active { transform: scale(0.95); }
+
+        /* Top Header */
+        .top-header {
+            background: var(--white);
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-title h1 { font-size: 18px; font-weight: 700; color: var(--gray-800); }
+        .header-title p { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
+        .store-badge { background: var(--primary-light); padding: 6px 14px; border-radius: 30px; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--primary); }
+
+        /* Main Content */
+        .main-content {
+            padding: 16px;
+            padding-bottom: 80px;
+            margin-bottom: 60px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 14px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .stat-icon i { font-size: 20px; color: var(--primary); }
+        .stat-value { font-size: 22px; font-weight: 800; color: var(--gray-800); }
+        .stat-label { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+
+        /* Cards */
+        .section-card {
+            background: var(--white);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+        }
+
+        .section-header {
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-200);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .section-header h3 { font-size: 15px; font-weight: 700; color: var(--gray-800); }
+
+        .btn-add {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .btn-add:active { transform: scale(0.96); }
+
+        /* List Items */
+        .order-list, .product-list { padding: 0 12px; }
+        .order-item, .product-item {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .order-id { font-weight: 800; color: var(--primary); font-size: 13px; }
+        .order-customer { font-weight: 600; font-size: 14px; }
+        .order-detail { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+        .order-address-preview { font-size: 11px; color: var(--gray-500); background: var(--gray-100); padding: 6px 10px; border-radius: 12px; margin-top: 6px; }
+        .order-products { font-size: 12px; margin-top: 8px; padding: 8px; background: var(--gray-50); border-radius: 12px; }
+        .order-total { font-weight: 700; color: var(--primary); font-size: 14px; margin-top: 8px; text-align: right; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-processing { background: #dbeafe; color: #1e40af; }
+        .status-shipped { background: #dcfce7; color: #166534; }
+        .status-completed { background: #e0e7ff; color: #3730a3; }
+        .status-waiting { background: #fed7aa; color: #9b3412; }
+
+        .action-buttons { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .btn-icon {
+            background: var(--gray-100);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-icon.whatsapp { background: #25D36620; color: #25D366; }
+        .btn-icon.edit { color: var(--primary); }
+        .btn-icon.delete { color: var(--danger); }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 28px 28px 0 0;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        @media (min-width: 768px) {
+            .modal-content { border-radius: 28px; margin: auto; }
+            .modal.show { align-items: center; }
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--white);
+        }
+        .modal-header h3 { font-size: 18px; font-weight: 700; }
+        .close-modal {
+            background: var(--gray-100);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .modal-body { padding: 20px; }
+
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--gray-700); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--gray-300);
+            border-radius: 16px;
+            font-size: 14px;
+        }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); }
+
+        .btn-save {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 15px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .order-detail-box {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .order-detail-box p { margin-bottom: 8px; font-size: 13px; }
+        .product-table { width: 100%; font-size: 13px; }
+        .product-table td { padding: 6px 0; border-bottom: 1px solid var(--gray-200); }
+
+        .bank-account-list {
+            background: var(--gray-100);
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state { text-align: center; padding: 40px 20px; color: var(--gray-400); }
+
+        /* Desktop Sidebar */
+        @media (min-width: 768px) {
+            .bottom-nav { display: none; }
+            .app-container { flex-direction: row; }
+            .sidebar-desktop {
+                width: 260px;
+                background: var(--white);
+                min-height: 100vh;
+                position: sticky;
+                top: 0;
+                border-right: 1px solid var(--gray-200);
+                padding: 20px 0;
+            }
+            .sidebar-logo { padding: 0 20px 20px; border-bottom: 1px solid var(--gray-200); margin-bottom: 20px; }
+            .sidebar-logo h2 { color: var(--primary); font-size: 18px; }
+            .sidebar-menu { display: flex; flex-direction: column; gap: 4px; }
+            .sidebar-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 20px;
+                background: none;
+                border: none;
+                width: 100%;
+                text-align: left;
+                cursor: pointer;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--gray-600);
+            }
+            .sidebar-item i { width: 24px; }
+            .sidebar-item.active { background: var(--primary-light); color: var(--primary); border-right: 3px solid var(--primary); }
+            .main-content { flex: 1; padding: 20px 28px; margin-bottom: 0; }
+            .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gray-800);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 13px;
+            z-index: 1100;
+            animation: fadeInUp 0.3s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Desktop Sidebar -->
+        <div class="sidebar-desktop" id="sidebarDesktop">
+            <div class="sidebar-logo">
+                <h2><i class="fas fa-store"></i> BabaAfzaal</h2>
+                <p style="font-size: 11px; color: var(--gray-500);">Merchant Panel</p>
+            </div>
+            <div class="sidebar-menu">
+                <button class="sidebar-item active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+                <button class="sidebar-item" data-page="orders"><i class="fas fa-shopping-cart"></i> Pesanan <span id="pendingBadgeDesktop" style="margin-left:auto; background:var(--danger); color:white; padding:2px 6px; border-radius:20px; font-size:10px; display:none"></span></button>
+                <button class="sidebar-item" data-page="products"><i class="fas fa-box"></i> Produk</button>
+                <button class="sidebar-item" data-page="carousel"><i class="fas fa-images"></i> Banner</button>
+                <button class="sidebar-item" data-page="verification"><i class="fas fa-clock"></i> Verifikasi Ongkir</button>
+                <button class="sidebar-item" data-page="bank"><i class="fas fa-university"></i> Rekening Toko</button>
+                <button class="sidebar-item" data-page="settings"><i class="fas fa-cog"></i> Pengaturan</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="top-header">
+                <div class="header-title">
+                    <h1 id="mobilePageTitle">Dashboard</h1>
+                    <p id="mobilePageSub">Kelola toko Anda</p>
+                </div>
+                <div class="store-badge"><i class="fas fa-store"></i><span>Warung BabaAfzaal</span></div>
+            </div>
+            <div id="pageContent"></div>
+        </div>
+
+        <!-- Bottom Navigation Mobile -->
+        <div class="bottom-nav">
+            <button class="nav-item active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i><span>Beranda</span></button>
+            <button class="nav-item" data-page="orders"><i class="fas fa-shopping-cart"></i><span>Pesanan</span><span id="pendingBadgeMobile" style="background:var(--danger); color:white; padding:2px 6px; border-radius:20px; font-size:9px; margin-left:4px; display:none"></span></button>
+            <button class="nav-item" data-page="products"><i class="fas fa-box"></i><span>Produk</span></button>
+            <button class="nav-item" data-page="more"><i class="fas fa-ellipsis-h"></i><span>Lainnya</span></button>
+        </div>
+    </div>
+
+    <!-- Modal Produk -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="productModalTitle">Tambah Produk</h3><button class="close-modal" onclick="closeProductModal()">&times;</button></div>
+            <div class="modal-body">
+                <input type="hidden" id="productId">
+                <div class="form-group"><label>Nama Produk</label><input type="text" id="productName" placeholder="Contoh: Kopi Arabika"></div>
+                <div class="form-group"><label>Deskripsi</label><textarea id="productDesc" rows="2" placeholder="Deskripsi"></textarea></div>
+                <div class="form-group"><label>Harga (Rp)</label><input type="number" id="productPrice" placeholder="Harga"></div>
+                <div class="form-group"><label>Kategori</label><select id="productCategory"><option>Makanan</option><option>Minuman</option><option>Kesehatan</option></select></div>
+                <div class="form-group"><label>Icon (Font Awesome)</label><input type="text" id="productIcon" value="fas fa-box"></div>
+                <div class="form-group"><label>Stok</label><input type="number" id="productStock" placeholder="Stok"></div>
+                <button class="btn-save" onclick="saveProduct()">Simpan Produk</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Carousel -->
+    <div class="modal" id="carouselModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="carouselModalTitle">Tambah Banner</h3><button class="close-modal" onclick="closeCarouselModal()">&times;</button></div>
+            <div class="modal-body">
+                <input type="hidden" id="carouselId">
+                <div class="form-group"><label>Judul Banner</label><input type="text" id="carouselTitle"></div>
+                <div class="form-group"><label>Deskripsi</label><textarea id="carouselDesc" rows="2"></textarea></div>
+                <button class="btn-save" onclick="saveCarousel()">Simpan Banner</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Verifikasi Ongkir (Detail Lengkap) -->
+    <div class="modal" id="verificationModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3>Verifikasi Ongkir & Kirim Link</h3><button class="close-modal" onclick="closeVerificationModal()">&times;</button></div>
+            <div class="modal-body" id="verificationContent"></div>
+        </div>
+    </div>
+
+    <!-- Modal Setup Rekening -->
+    <div class="modal" id="bankModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3>Pengaturan Rekening Toko</h3><button class="close-modal" onclick="closeBankModal()">&times;</button></div>
+            <div class="modal-body" id="bankContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        let products = [];
+        let orders = [];
+        let pendingVerifications = [];
+        let carouselSlides = [];
+        let bankAccounts = [];
+        let currentPage = 'dashboard';
+        let currentVerificationOrder = null;
+
+        // Load data
+        function loadData() {
+            products = JSON.parse(localStorage.getItem('babaafzaal_products') || '[]');
+            orders = JSON.parse(localStorage.getItem('babaafzaal_orders') || '[]');
+            pendingVerifications = JSON.parse(localStorage.getItem('babaafzaal_pending_verification') || '[]');
+            carouselSlides = JSON.parse(localStorage.getItem('babaafzaal_carousel') || '[]');
+            bankAccounts = JSON.parse(localStorage.getItem('babaafzaal_bank_accounts') || '[]');
+            
+            if(products.length === 0) {
+                products = [
+                    { id:1, name:"Kopi Arabika Premium", description:"Kopi arabika pilihan", price:85000, category:"Minuman", icon:"fas fa-mug-hot", stock:50, views:245, sold:120 },
+                    { id:2, name:"Madu Asli Hutan", description:"Madu murni", price:125000, category:"Makanan", icon:"fas fa-honey-pot", stock:30, views:189, sold:85 }
+                ];
+                localStorage.setItem('babaafzaal_products', JSON.stringify(products));
+            }
+            if(carouselSlides.length === 0) {
+                carouselSlides = [{ id:1, title:"Selamat Datang", description:"Belanja praktis dan aman" }];
+                localStorage.setItem('babaafzaal_carousel', JSON.stringify(carouselSlides));
+            }
+            if(bankAccounts.length === 0) {
+                bankAccounts = [
+                    { bank: "BCA", number: "1234567890", name: "Warung BabaAfzaal" },
+                    { bank: "Mandiri", number: "0987654321", name: "Warung BabaAfzaal" },
+                    { bank: "BRI", number: "5558889999", name: "Warung BabaAfzaal" }
+                ];
+                localStorage.setItem('babaafzaal_bank_accounts', JSON.stringify(bankAccounts));
+            }
+            updatePendingBadge();
+        }
+
+        function updatePendingBadge() {
+            const count = pendingVerifications.length;
+            ['pendingBadgeMobile', 'pendingBadgeDesktop'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) {
+                    if(count > 0) { el.style.display = 'inline-block'; el.innerText = count; }
+                    else el.style.display = 'none';
+                }
+            });
+        }
+
+        // Render Dashboard
+        function renderDashboard() {
+            const totalProducts = products.length;
+            const totalOrders = orders.length;
+            const totalRevenue = orders.reduce((s,o) => s + o.total, 0);
+            const pendingCount = pendingVerifications.length;
+            
+            document.getElementById('pageContent').innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-box"></i></div><div class="stat-value">${totalProducts}</div><div class="stat-label">Total Produk</div></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-value">${totalOrders}</div><div class="stat-label">Pesanan Selesai</div></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-value">${pendingCount}</div><div class="stat-label">Perlu Verifikasi</div></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-chart-line"></i></div><div class="stat-value">Rp ${totalRevenue.toLocaleString('id-ID')}</div><div class="stat-label">Pendapatan</div></div>
+                </div>
+                <div class="section-card">
+                    <div class="section-header"><h3><i class="fas fa-clock"></i> Perlu Verifikasi Ongkir (${pendingCount})</h3></div>
+                    <div class="order-list" id="pendingVerifList"></div>
+                </div>
+                <div class="section-card">
+                    <div class="section-header"><h3><i class="fas fa-history"></i> Pesanan Terbaru</h3></div>
+                    <div class="order-list" id="recentOrdersList"></div>
+                </div>
+            `;
+            
+            // Pending list
+            const pendingList = document.getElementById('pendingVerifList');
+            if(pendingVerifications.length === 0) {
+                pendingList.innerHTML = '<div class="empty-state"><i class="fas fa-check-circle"></i><p>Tidak ada pesanan menunggu verifikasi</p></div>';
+            } else {
+                pendingList.innerHTML = pendingVerifications.map(p => `
+                    <div class="order-item">
+                        <div class="order-header">
+                            <span class="order-id">${p.id}</span>
+                            <span class="status-badge status-waiting">Menunggu Verifikasi</span>
+                        </div>
+                        <div class="order-customer"><i class="fas fa-user"></i> ${p.customerName} (${p.customerPhone})</div>
+                        <div class="order-address-preview"><i class="fas fa-map-marker-alt"></i> ${p.address?.label || 'Alamat'}: ${p.address?.detail?.substring(0, 60) || '-'}</div>
+                        <div class="order-products"><i class="fas fa-box"></i> ${p.items.length} produk: ${p.items.map(i => `${i.quantity}x ${i.name}`).join(', ')}</div>
+                        <div class="order-total">Subtotal: Rp ${p.subtotal.toLocaleString('id-ID')}</div>
+                        <div class="action-buttons">
+                            <button class="btn-icon whatsapp" onclick="openVerificationModal('${p.id}')"><i class="fab fa-whatsapp"></i> Verifikasi & Kirim Link</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Recent orders
+            const recentList = document.getElementById('recentOrdersList');
+            const recent = [...orders].reverse().slice(0,5);
+            if(recent.length === 0) {
+                recentList.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Belum ada pesanan</p></div>';
+            } else {
+                recentList.innerHTML = recent.map(o => `
+                    <div class="order-item">
+                        <div class="order-header"><span class="order-id">${o.id}</span><span class="status-badge status-${o.status}">${o.status === 'processing' ? 'Diproses' : o.status === 'shipped' ? 'Dikirim' : 'Selesai'}</span></div>
+                        <div class="order-customer">${o.customerName}</div>
+                        <div class="order-detail">${o.items.length} produk | ${o.date}</div>
+                        <div class="order-total">Rp ${o.total.toLocaleString('id-ID')}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Render Products
+        function renderProducts() {
+            document.getElementById('pageContent').innerHTML = `
+                <div class="section-card">
+                    <div class="section-header"><h3><i class="fas fa-box"></i> Daftar Produk</h3><button class="btn-add" onclick="openProductModal()"><i class="fas fa-plus"></i> Tambah</button></div>
+                    <div class="product-list" id="productsList"></div>
+                </div>
+            `;
+            const list = document.getElementById('productsList');
+            if(products.length === 0) list.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i><p>Belum ada produk</p></div>';
+            else {
+                list.innerHTML = products.map(p => `
+                    <div class="order-item">
+                        <div class="order-header"><span class="order-customer"><i class="${p.icon}"></i> ${p.name}</span></div>
+                        <div class="order-detail">Rp ${p.price.toLocaleString('id-ID')} | Stok: ${p.stock} | Terjual: ${p.sold || 0}</div>
+                        <div class="action-buttons"><button class="btn-icon edit" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i> Edit</button><button class="btn-icon delete" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i> Hapus</button></div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Render Orders (semua pesanan)
+        function renderOrders() {
+            document.getElementById('pageContent').innerHTML = `
+                <div class="section-card"><div class="section-header"><h3><i class="fas fa-shopping-cart"></i> Semua Pesanan</h3></div><div class="order-list" id="allOrdersList"></div></div>
+            `;
+            const list = document.getElementById('allOrdersList');
+            let html = '';
+            pendingVerifications.forEach(p => {
+                html += `
+                    <div class="order-item">
+                        <div class="order-header"><span class="order-id">⚠️ ${p.id}</span><span class="status-badge status-waiting">Menunggu Verifikasi</span></div>
+                        <div class="order-customer">${p.customerName}</div>
+                        <div class="order-address-preview">📍 ${p.address?.detail?.substring(0, 50) || '-'}</div>
+                        <div class="order-products">${p.items.map(i => `${i.quantity}x ${i.name}`).join(', ')}</div>
+                        <div class="action-buttons"><button class="btn-icon whatsapp" onclick="openVerificationModal('${p.id}')"><i class="fab fa-whatsapp"></i> Verifikasi</button></div>
+                    </div>
+                `;
+            });
+            [...orders].reverse().forEach(o => {
+                html += `
+                    <div class="order-item">
+                        <div class="order-header"><span class="order-id">${o.id}</span><span class="status-badge status-${o.status}">${o.status === 'processing' ? 'Diproses' : o.status === 'shipped' ? 'Dikirim' : 'Selesai'}</span></div>
+                        <div class="order-customer">${o.customerName}</div>
+                        <div class="order-detail">${o.items.length} produk | ${o.date}</div>
+                        <div class="order-total">Rp ${o.total.toLocaleString('id-ID')}</div>
+                        <div class="action-buttons">
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" style="padding:6px; border-radius:20px; font-size:11px">
+                                <option value="processing" ${o.status === 'processing' ? 'selected' : ''}>Diproses</option>
+                                <option value="shipped" ${o.status === 'shipped' ? 'selected' : ''}>Dikirim</option>
+                                <option value="completed" ${o.status === 'completed' ? 'selected' : ''}>Selesai</option>
+                            </select>
+                            <button class="btn-icon" onclick="viewOrderDetail('${o.id}')"><i class="fas fa-eye"></i> Detail</button>
+                        </div>
+                    </div>
+                `;
+            });
+            list.innerHTML = html || '<div class="empty-state">Belum ada pesanan</div>';
+        }
+
+        function viewOrderDetail(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if(order) {
+                alert(`ID: ${order.id}\nPelanggan: ${order.customerName}\nTelepon: ${order.customerPhone}\nAlamat: ${order.customerAddress}\nProduk: ${order.items.map(i => `${i.quantity}x ${i.name}`).join(', ')}\nTotal: Rp ${order.total.toLocaleString('id-ID')}`);
+            }
+        }
+
+        function updateOrderStatus(orderId, status) {
+            const order = orders.find(o => o.id === orderId);
+            if(order) { order.status = status; localStorage.setItem('babaafzaal_orders', JSON.stringify(orders)); showToast('Status diupdate'); renderOrders(); }
+        }
+
+        // Render Carousel
+        function renderCarousel() {
+            document.getElementById('pageContent').innerHTML = `
+                <div class="section-card"><div class="section-header"><h3><i class="fas fa-images"></i> Banner Carousel</h3><button class="btn-add" onclick="openCarouselModal()"><i class="fas fa-plus"></i> Tambah</button></div>
+                <div class="product-list" id="carouselList"></div></div>
+            `;
+            const list = document.getElementById('carouselList');
+            if(carouselSlides.length === 0) list.innerHTML = '<div class="empty-state">Belum ada banner</div>';
+            else {
+                list.innerHTML = carouselSlides.map(s => `
+                    <div class="order-item"><div class="order-header"><span>📸 ${s.title}</span></div><div class="order-detail">${s.description}</div>
+                    <div class="action-buttons"><button class="btn-icon edit" onclick="editCarousel(${s.id})"><i class="fas fa-edit"></i> Edit</button><button class="btn-icon delete" onclick="deleteCarousel(${s.id})"><i class="fas fa-trash"></i> Hapus</button></div></div>
+                `).join('');
+            }
+        }
+
+        // Render Verifikasi Page
+        function renderVerification() {
+            document.getElementById('pageContent').innerHTML = `
+                <div class="section-card"><div class="section-header"><h3><i class="fas fa-clock"></i> Verifikasi Ongkir</h3></div>
+                <div class="order-list" id="verifList"></div></div>
+            `;
+            const list = document.getElementById('verifList');
+            if(pendingVerifications.length === 0) list.innerHTML = '<div class="empty-state">Semua pesanan sudah diverifikasi</div>';
+            else {
+                list.innerHTML = pendingVerifications.map(p => `
+                    <div class="order-item">
+                        <div class="order-header"><span class="order-id">${p.id}</span><span class="status-badge status-waiting">Menunggu</span></div>
+                        <div class="order-customer">${p.customerName} (${p.customerPhone})</div>
+                        <div class="order-address-preview"><strong>Alamat:</strong> ${p.address?.label || '-'}: ${p.address?.detail || '-'}</div>
+                        <div class="order-products"><strong>Produk:</strong><br>${p.items.map(i => `• ${i.quantity}x ${i.name} - Rp ${(i.price*i.quantity).toLocaleString('id-ID')}`).join('<br>')}</div>
+                        <div class="order-total">Subtotal: Rp ${p.subtotal.toLocaleString('id-ID')}</div>
+                        <div class="action-buttons"><button class="btn-icon whatsapp" onclick="openVerificationModal('${p.id}')"><i class="fab fa-whatsapp"></i> Verifikasi & Kirim Link</button></div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Render Bank Accounts
+        function renderBank() {
+            document.getElementById('pageContent').innerHTML = `
+                <div class="section-card">
+                    <div class="section-header"><h3><i class="fas fa-university"></i> Rekening Toko</h3><button class="btn-add" onclick="openBankModal()"><i class="fas fa-plus"></i> Tambah Rekening</button></div>
+                    <div class="product-list" id="bankList"></div>
+                </div>
+            `;
+            const list = document.getElementById('bankList');
+            if(bankAccounts.length === 0) list.innerHTML = '<div class="empty-state">Belum ada rekening</div>';
+            else {
+                list.innerHTML = bankAccounts.map((b, idx) => `
+                    <div class="order-item">
+                        <div class="order-header"><span><i class="fas fa-university"></i> ${b.bank}</span></div>
+                        <div class="order-detail">No: ${b.number}</div>
+                        <div class="order-detail">a.n: ${b.name}</div>
+                        <div class="action-buttons"><button class="btn-icon delete" onclick="deleteBank(${idx})"><i class="fas fa-trash"></i> Hapus</button></div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function openBankModal() {
+            document.getElementById('bankContent').innerHTML = `
+                <div class="form-group"><label>Nama Bank</label><input type="text" id="bankName" placeholder="BCA / Mandiri / BRI"></div>
+                <div class="form-group"><label>Nomor Rekening</label><input type="text" id="bankNumber" placeholder="1234567890"></div>
+                <div class="form-group"><label>Atas Nama</label><input type="text" id="bankAccountName" placeholder="Warung BabaAfzaal"></div>
+                <button class="btn-save" onclick="saveBank()">Simpan Rekening</button>
+            `;
+            document.getElementById('bankModal').classList.add('show');
+        }
+
+        function saveBank() {
+            const bank = document.getElementById('bankName').value.trim();
+            const number = document.getElementById('bankNumber').value.trim();
+            const name = document.getElementById('bankAccountName').value.trim();
+            if(!bank || !number) { showToast('Isi semua field'); return; }
+            bankAccounts.push({ bank, number, name });
+            localStorage.setItem('babaafzaal_bank_accounts', JSON.stringify(bankAccounts));
+            closeBankModal();
+            renderBank();
+            showToast('Rekening ditambahkan');
+        }
+
+        function deleteBank(idx) {
+            if(confirm('Hapus rekening ini?')) {
+                bankAccounts.splice(idx, 1);
+                localStorage.setItem('babaafzaal_bank_accounts', JSON.stringify(bankAccounts));
+                renderBank();
+                showToast('Rekening dihapus');
+            }
+        }
+
+        function closeBankModal() { document.getElementById('bankModal').classList.remove('show'); }
+
+        // Render Settings
+        function renderSettings() {
+            const whatsapp = JSON.parse(localStorage.getItem('babaafzaal_whatsapp') || '{"number":"6281234567890"}');
+            document.getElementById('pageContent').innerHTML = `
+                <div class="section-card"><div class="section-header"><h3><i class="fas fa-cog"></i> Pengaturan Toko</h3></div>
+                <div class="modal-body"><div class="form-group"><label>Nomor WhatsApp Admin</label><input type="tel" id="whatsappNumber" value="${whatsapp.number}"></div>
+                <div class="form-group"><label>Nama Toko</label><input type="text" id="storeName" value="Warung BabaAfzaal"></div>
+                <button class="btn-save" onclick="saveSettings()">Simpan Pengaturan</button></div></div>
+            `;
+        }
+
+        function saveSettings() {
+            const whatsapp = document.getElementById('whatsappNumber').value;
+            localStorage.setItem('babaafzaal_whatsapp', JSON.stringify({ number: whatsapp }));
+            showToast('Pengaturan disimpan');
+        }
+
+        // Render More for mobile
+        function renderMore() {
+            document.getElementById('pageContent').innerHTML = `
+                <div class="section-card"><div class="section-header"><h3><i class="fas fa-ellipsis-h"></i> Menu Lainnya</h3></div>
+                <div style="padding:8px 16px;"><button class="sidebar-item" style="width:100%" onclick="navigateTo('carousel')"><i class="fas fa-images"></i> Banner</button>
+                <button class="sidebar-item" style="width:100%" onclick="navigateTo('verification')"><i class="fas fa-clock"></i> Verifikasi</button>
+                <button class="sidebar-item" style="width:100%" onclick="navigateTo('bank')"><i class="fas fa-university"></i> Rekening</button>
+                <button class="sidebar-item" style="width:100%" onclick="navigateTo('settings')"><i class="fas fa-cog"></i> Pengaturan</button></div></div>
+            `;
+        }
+
+        // VERIFICATION MODAL with FULL DETAILS
+        function openVerificationModal(orderId) {
+            const order = pendingVerifications.find(p => p.id === orderId);
+            if(!order) return;
+            currentVerificationOrder = order;
+            
+            const productsHtml = order.items.map(i => `<tr><td>${i.quantity}x</td><td>${i.name}</td><td style="text-align:right">Rp ${(i.price*i.quantity).toLocaleString('id-ID')}</td></tr>`).join('');
+            
+            document.getElementById('verificationContent').innerHTML = `
+                <div class="order-detail-box">
+                    <p><strong>🆔 ID Pesanan:</strong> ${order.id}</p>
+                    <p><strong>👤 Pelanggan:</strong> ${order.customerName} (${order.customerPhone})</p>
+                    <p><strong>📍 Alamat:</strong> ${order.address?.label || '-'}<br>${order.address?.detail || '-'}<br><small>Koordinat: ${order.address?.lat?.toFixed(6) || '-'}, ${order.address?.lng?.toFixed(6) || '-'}</small></p>
+                </div>
+                
+                <div class="order-detail-box">
+                    <strong>📦 Produk yang dipesan:</strong>
+                    <table class="product-table" style="width:100%; margin-top:8px">${productsHtml}<tr style="border-top:2px solid var(--gray-200); font-weight:800"><td colspan="2">Subtotal</td><td style="text-align:right">Rp ${order.subtotal.toLocaleString('id-ID')}</td></tr></table>
+                </div>
+                
+                <div class="form-group">
+                    <label>💰 Estimasi Ongkos Kirim (Rp)</label>
+                    <input type="number" id="shippingCost" class="form-control" placeholder="Masukkan ongkir" value="15000">
+                </div>
+                
+                <div class="form-group">
+                    <label>🏦 Pilih Metode Pembayaran (akan dikirim ke customer)</label>
+                    <select id="paymentMethodSelect" style="width:100%; padding:12px; border-radius:16px; border:1px solid var(--gray-300)">
+                        <option value="">-- Pilih Metode --</option>
+                        ${bankAccounts.map(b => `<option value="${b.bank}|${b.number}|${b.name}">${b.bank} - ${b.number} (a.n ${b.name})</option>`).join('')}
+                        <option value="COD">COD (Bayar di Tempat)</option>
+                        <option value="QRIS">QRIS (Scan QRIS)</option>
+                    </select>
+                </div>
+                
+                <div id="paymentDetailInfo" style="margin-top:12px; padding:12px; background:var(--gray-100); border-radius:16px; display:none"></div>
+                
+                <button class="btn-save" onclick="sendVerificationWithPayment()" style="margin-top:16px">
+                    <i class="fab fa-whatsapp"></i> Kirim Link Verifikasi ke Customer
+                </button>
+            `;
+            
+            const methodSelect = document.getElementById('paymentMethodSelect');
+            methodSelect.addEventListener('change', function() {
+                const val = this.value;
+                const detailDiv = document.getElementById('paymentDetailInfo');
+                if(val && val !== 'COD' && val !== 'QRIS') {
+                    const [bank, number, name] = val.split('|');
+                    detailDiv.innerHTML = `<strong>💳 Detail Pembayaran:</strong><br>Bank: ${bank}<br>No Rekening: ${number}<br>Atas Nama: ${name}`;
+                    detailDiv.style.display = 'block';
+                } else if(val === 'COD') {
+                    detailDiv.innerHTML = `<strong>💵 Pembayaran COD</strong><br>Bayar langsung saat barang diterima`;
+                    detailDiv.style.display = 'block';
+                } else if(val === 'QRIS') {
+                    detailDiv.innerHTML = `<strong>📱 QRIS</strong><br>Scan QRIS yang akan dikirim via WhatsApp`;
+                    detailDiv.style.display = 'block';
+                } else {
+                    detailDiv.style.display = 'none';
+                }
+            });
+            
+            document.getElementById('verificationModal').classList.add('show');
+        }
+
+        function sendVerificationWithPayment() {
+            const shipping = parseInt(document.getElementById('shippingCost').value);
+            const paymentMethodRaw = document.getElementById('paymentMethodSelect').value;
+            if(!paymentMethodRaw) { showToast('Pilih metode pembayaran'); return; }
+            if(isNaN(shipping) || shipping < 0) { showToast('Masukkan ongkir yang valid'); return; }
+            
+            let paymentText = '';
+            let paymentMethodDisplay = '';
+            if(paymentMethodRaw === 'COD') {
+                paymentText = '💵 COD (Bayar di Tempat)';
+                paymentMethodDisplay = 'COD';
+            } else if(paymentMethodRaw === 'QRIS') {
+                paymentText = '📱 QRIS - Scan QRIS untuk pembayaran';
+                paymentMethodDisplay = 'QRIS';
+            } else {
+                const [bank, number, name] = paymentMethodRaw.split('|');
+                paymentText = `🏦 Transfer Bank ${bank}\nNo Rekening: ${number}\nAtas Nama: ${name}`;
+                paymentMethodDisplay = bank;
+            }
+            
+            const total = currentVerificationOrder.subtotal + shipping;
+            const baseUrl = window.location.origin + window.location.pathname.replace('admin.html', 'index.html');
+            const paymentLink = `${baseUrl}?pay=${currentVerificationOrder.id}&shipping=${shipping}&method=${encodeURIComponent(paymentMethodDisplay)}`;
+            
+            const itemsText = currentVerificationOrder.items.map(i => `- ${i.quantity}x ${i.name} = Rp ${(i.price*i.quantity).toLocaleString('id-ID')}`).join('\n');
+            
+            const message = `*✅ VERIFIKASI PESANAN - WARUNG BABAAFZAAL*\n\nHalo *${currentVerificationOrder.customerName}*,\n\nPesanan Anda dengan ID: *${currentVerificationOrder.id}* telah kami verifikasi.\n\n📦 *Detail Pesanan:*\n${itemsText}\n\n📍 *Alamat Pengiriman:*\n${currentVerificationOrder.address?.label || 'Alamat'}\n${currentVerificationOrder.address?.detail || '-'}\n\n🚚 *Ongkos Kirim:* Rp ${shipping.toLocaleString('id-ID')}\n💰 *Total yang harus dibayar:* *Rp ${total.toLocaleString('id-ID')}*\n\n💳 *Metode Pembayaran:*\n${paymentText}\n\n🔗 *Silakan klik link berikut untuk melanjutkan pembayaran:*\n${paymentLink}\n\nSetelah pembayaran dikonfirmasi, pesanan akan segera kami proses.\n\nTerima kasih! 🙏`;
+            
+            const customerPhone = currentVerificationOrder.customerPhone;
+            window.open(`https://wa.me/${customerPhone}?text=${encodeURIComponent(message)}`, '_blank');
+            
+            // Move to orders after sending
+            const updatedOrder = {
+                id: currentVerificationOrder.id,
+                date: new Date().toLocaleString('id-ID'),
+                customerName: currentVerificationOrder.customerName,
+                customerPhone: currentVerificationOrder.customerPhone,
+                customerAddress: `${currentVerificationOrder.address?.label || ''}: ${currentVerificationOrder.address?.detail || ''}`,
+                items: currentVerificationOrder.items,
+                total: total,
+                status: 'processing',
+                paymentMethod: paymentMethodDisplay
+            };
+            orders.push(updatedOrder);
+            localStorage.setItem('babaafzaal_orders', JSON.stringify(orders));
+            
+            // Remove from pending
+            pendingVerifications = pendingVerifications.filter(p => p.id !== currentVerificationOrder.id);
+            localStorage.setItem('babaafzaal_pending_verification', JSON.stringify(pendingVerifications));
+            
+            closeVerificationModal();
+            updatePendingBadge();
+            if(currentPage === 'dashboard') renderDashboard();
+            else if(currentPage === 'orders') renderOrders();
+            else if(currentPage === 'verification') renderVerification();
+            showToast('Link verifikasi telah dikirim ke customer');
+        }
+
+        function closeVerificationModal() { document.getElementById('verificationModal').classList.remove('show'); }
+
+        // CRUD Products
+        function openProductModal(editId = null) {
+            if(editId) {
+                const p = products.find(p => p.id === editId);
+                if(p) {
+                    document.getElementById('productModalTitle').innerText = 'Edit Produk';
+                    document.getElementById('productId').value = p.id;
+                    document.getElementById('productName').value = p.name;
+                    document.getElementById('productDesc').value = p.description;
+                    document.getElementById('productPrice').value = p.price;
+                    document.getElementById('productCategory').value = p.category;
+                    document.getElementById('productIcon').value = p.icon;
+                    document.getElementById('productStock').value = p.stock;
+                }
+            } else {
+                document.getElementById('productModalTitle').innerText = 'Tambah Produk';
+                document.getElementById('productId').value = '';
+                document.getElementById('productName').value = '';
+                document.getElementById('productDesc').value = '';
+                document.getElementById('productPrice').value = '';
+                document.getElementById('productCategory').value = 'Makanan';
+                document.getElementById('productIcon').value = 'fas fa-box';
+                document.getElementById('productStock').value = '';
+            }
+            document.getElementById('productModal').classList.add('show');
+        }
+        function closeProductModal() { document.getElementById('productModal').classList.remove('show'); }
+        function saveProduct() {
+            const id = document.getElementById('productId').value;
+            const product = {
+                id: id ? parseInt(id) : Date.now(),
+                name: document.getElementById('productName').value,
+                description: document.getElementById('productDesc').value,
+                price: parseInt(document.getElementById('productPrice').value),
+                category: document.getElementById('productCategory').value,
+                icon: document.getElementById('productIcon').value,
+                stock: parseInt(document.getElementById('productStock').value),
+                views: 0, sold: 0
+            };
+            if(id) { const idx = products.findIndex(p => p.id === parseInt(id)); if(idx !== -1) products[idx] = { ...products[idx], ...product }; }
+            else products.push(product);
+            localStorage.setItem('babaafzaal_products', JSON.stringify(products));
+            closeProductModal();
+            renderProducts();
+            showToast('Produk disimpan');
+        }
+        function editProduct(id) { openProductModal(id); }
+        function deleteProduct(id) { if(confirm('Hapus produk?')) { products = products.filter(p => p.id !== id); localStorage.setItem('babaafzaal_products', JSON.stringify(products)); renderProducts(); showToast('Produk dihapus'); } }
+
+        // Carousel CRUD
+        function openCarouselModal(editId = null) {
+            if(editId) { const s = carouselSlides.find(s => s.id === editId); if(s) { document.getElementById('carouselModalTitle').innerText = 'Edit Banner'; document.getElementById('carouselId').value = s.id; document.getElementById('carouselTitle').value = s.title; document.getElementById('carouselDesc').value = s.description; } }
+            else { document.getElementById('carouselModalTitle').innerText = 'Tambah Banner'; document.getElementById('carouselId').value = ''; document.getElementById('carouselTitle').value = ''; document.getElementById('carouselDesc').value = ''; }
+            document.getElementById('carouselModal').classList.add('show');
+        }
+        function closeCarouselModal() { document.getElementById('carouselModal').classList.remove('show'); }
+        function saveCarousel() {
+            const id = document.getElementById('carouselId').value;
+            const slide = { id: id ? parseInt(id) : Date.now(), title: document.getElementById('carouselTitle').value, description: document.getElementById('carouselDesc').value };
+            if(id) { const idx = carouselSlides.findIndex(s => s.id === parseInt(id)); if(idx !== -1) carouselSlides[idx] = slide; }
+            else carouselSlides.push(slide);
+            localStorage.setItem('babaafzaal_carousel', JSON.stringify(carouselSlides));
+            closeCarouselModal();
+            renderCarousel();
+            showToast('Banner disimpan');
+        }
+        function editCarousel(id) { openCarouselModal(id); }
+        function deleteCarousel(id) { if(confirm('Hapus banner?')) { carouselSlides = carouselSlides.filter(s => s.id !== id); localStorage.setItem('babaafzaal_carousel', JSON.stringify(carouselSlides)); renderCarousel(); showToast('Banner dihapus'); } }
+
+        // Navigation
+        function navigateTo(page) {
+            currentPage = page;
+            const titles = { dashboard:'Dashboard', products:'Produk', orders:'Pesanan', carousel:'Banner', verification:'Verifikasi', bank:'Rekening Toko', settings:'Pengaturan', more:'Menu' };
+            const subs = { dashboard:'Kelola toko', products:'Atur produk', orders:'Kelola pesanan', carousel:'Kelola banner', verification:'Verifikasi ongkir', bank:'Setup rekening', settings:'Pengaturan toko', more:'Menu lainnya' };
+            document.getElementById('mobilePageTitle').innerText = titles[page] || 'Dashboard';
+            document.getElementById('mobilePageSub').innerText = subs[page] || '';
+            document.querySelectorAll('.nav-item, .sidebar-item').forEach(el => { if(el.getAttribute('data-page') === page) el.classList.add('active'); else el.classList.remove('active'); });
+            if(page === 'dashboard') renderDashboard();
+            else if(page === 'products') renderProducts();
+            else if(page === 'orders') renderOrders();
+            else if(page === 'carousel') renderCarousel();
+            else if(page === 'verification') renderVerification();
+            else if(page === 'bank') renderBank();
+            else if(page === 'settings') renderSettings();
+            else if(page === 'more') renderMore();
+        }
+
+        function showToast(msg) { const toast = document.createElement('div'); toast.className = 'toast'; toast.innerText = msg; document.body.appendChild(toast); setTimeout(() => toast.remove(), 2500); }
+
+        document.querySelectorAll('.nav-item, .sidebar-item').forEach(btn => { btn.addEventListener('click', () => { const page = btn.getAttribute('data-page'); if(page) navigateTo(page); }); });
+        window.onclick = function(e) { if(e.target.classList.contains('modal')) e.target.classList.remove('show'); }
+
+        loadData();
+        navigateTo('dashboard');
+    </script>
+</body>
+</html>
